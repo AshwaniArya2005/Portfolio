@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { personal } from "@/data/personal";
 
 export function LoadingScreen() {
   const [loading, setLoading] = useState(true);
@@ -59,7 +60,7 @@ export function LoadingScreen() {
                 fontFamily: "var(--font-heading)",
               }}
             >
-              AK
+              {personal.initials}
             </div>
           </motion.div>
 
@@ -71,7 +72,7 @@ export function LoadingScreen() {
             className="relative z-10 mb-10 text-lg font-medium"
             style={{ color: "var(--text-secondary)", fontFamily: "var(--font-heading)" }}
           >
-            Ashwani Kumar
+            {personal.name}
           </motion.p>
 
           {/* Progress bar */}
