@@ -1,0 +1,46 @@
+ Ashwani Kumar Arya 
+ Ludhiana, Punjab , India | P: +91 7250211457 |  ashw aniar ya2009@gmail.com 
+ LinkedIn:  linkedin.com/in/ashw ani-ar ya2005  | GitHub:  github .com/Ashw aniAr ya2005 
+ PR OFESSION AL SUMMAR Y 
+ Computer Science underg raduate skilled in J ava with hands-on experience in full-stac k dev elopment (MERN). Strong interest in 
+ AI, cloud computing, and database systems . Proven ability to build scalable w eb applications and optimize perfor mance . A quic k 
+ learner who thri ves on solving problems and contin uously impro ving through hands-on practice . 
+ TECHNICAL SKILLS 
+ Pr ogramming Langua ges:  Java, Python 
+ Web Dev elopment:  HTML, CSS , JavaScript, R eact.js , Node .js, Express .js, Mong oDB 
+ Tools & Platf orms  : Git, Firebase , VS Code 
+ Data base  : MySQL, Mong oDB 
+ EXPERIENCE/PR OJECTS 
+ FLARE- FULL ST ACK DELIVER Y APP  Link 
+ ●  Designed and dev eloped a MERN stac k application for g rocer y, food, and spor ts item deli very. 
+ ●  Implemented secure authentication and role-based access control (admin, v endor , customer). 
+ ●  Built a dynamic shopping car t with real-time updates to impro ve checkout f low and arc hitected the system to be scalable for 
+ handling larg er order v olumes in the future . 
+ TRENDMIND- AI MODEL DISCO VER Y PLATFORM  Link 
+ ●  Engineered a w eb app for exploring, comparing, and do wnloading trending AI models . 
+ ●  Implemented user authentication for personalized model access . 
+ ●  Developed detailed model cards with metrics and side-b y-side comparison features and designed a responsi ve interface with 
+ React.js to ensure accessibility across devices . 
+ NETW ORK SCANNER  Link 
+ ●  Developed a full-stac k app to scan local netw orks, identify acti ve devices , open por ts, and OS types . 
+ ●  Optimized and implemented bac kend scanning logic with Node .js & Express .js for accurate detection and created a R eact.js 
+ frontend to visualize scan results in real-time . 
+ LIVING EAR TH- A 3D GLOB AL EVENT VISU ALIZER  Link 
+ ●  Built an interacti ve 3D climate visualization tool using R eact, T hree.js, and W ebGL to render high-fidelity planetar y data. 
+ ●  Integ rated NASA EONET and Open-Meteo APIs to map real-time natural disaster ev ents (wildfires , stor ms) onto a 3D 
+ globe with precise g eospatial positioning . 
+ ●  Implemented custom GLSL shaders for realistic atmospheric scattering and a dynamic da y/night cycle sync hronized with 
+ real-w orld UTC time . 
+ CER TIFICATIONS 
+ ●  NPTEL  – Introduction to Mac hine Lear ning (R egression, Classification, Model Ev aluation)  Link 
+ ●  GOOGLE  - The Bits and Bytes of Computer Netw orking  (Netw orking Fundamentals , TCP/IP , DNS)  Link 
+ ●  IBM  - Cyber Security Analyst (Netw ork Security , Risk Analysis , Threat Detection)  Link 
+ ●  IAMNEO  – MERN Stac k Dev eloper (Mong oDB, Express .js, React.js , Node .js)  Link 
+ EDUCATION 
+ VIT BHOP AL UNIVERSITY  Bhopal, Madh ya Pradesh 
+ Bachelor of T echnolog y  2023-Present 
+ Major in Computer Science and Engineering 
+ Cum ulative GP A: 8.86/10 
+ Relevant Coursew ork: Data Str ucture and Alg orithm, Database Manag ement System, Operating System 
+ BAL BHARATI PUBLIC SCHOOL  Ludhiana, Punjab 
+ Class 12 P ercentag e: 91.2%  2023 
