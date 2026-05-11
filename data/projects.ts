@@ -108,7 +108,7 @@ export const projects: Project[] = [
     image: "/projects/portfolio.png",
     tech: ["Next.js", "TypeScript", "Framer Motion", "TailwindCSS"],
     githubUrl: "https://github.com/AshwaniArya2005/Portfolio",
-    liveUrl: "https://ashwaniarya.vercel.app",
+    liveUrl: "https://portfolio-theta-tan-v7o6oic2fp.vercel.app/",
     status: "completed",
     featured: false,
     category: ["Web"],
