@@ -247,10 +247,11 @@ export function Projects() {
                       {project.tech.slice(0, 3).map((t) => (
                         <span
                           key={t}
-                          className="px-1.5 py-0.5 rounded text-xs"
+                          className="px-2 py-0.5 rounded text-[10px] font-medium"
                           style={{
-                            background: "var(--surface-2)",
-                            color: "var(--text-muted)",
+                            background: "rgba(255,255,255,0.03)",
+                            color: "var(--text-secondary)",
+                            border: "1px solid rgba(255,255,255,0.08)",
                             fontFamily: "var(--font-mono)",
                           }}
                         >
@@ -320,36 +321,56 @@ export function Projects() {
               </button>
 
               <div className="overflow-y-auto custom-scrollbar">
-                {/* Header Image */}
-                <div className="h-64 sm:h-80 relative overflow-hidden">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(6,182,212,0.3) 100%)`,
-                    }}
-                  />
-                  {selectedProject.image && (
-                    <img
-                      src={selectedProject.image}
-                      alt={selectedProject.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                {selectedProject.featured ? (
+                  /* Featured: Full image hero header */
+                  <div className="h-64 sm:h-80 relative overflow-hidden">
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(124,58,237,0.3) 0%, rgba(6,182,212,0.3) 100%)`,
+                      }}
                     />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent" />
-                  
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="flex gap-2 mb-3">
+                    {selectedProject.image && (
+                      <img
+                        src={selectedProject.image}
+                        alt={selectedProject.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] to-transparent" />
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="flex gap-2 mb-3">
+                        <Badge status={selectedProject.status} />
+                        <Badge status="featured" />
+                      </div>
+                      <h2
+                        className="text-2xl sm:text-4xl font-bold"
+                        style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
+                      >
+                        {selectedProject.title}
+                      </h2>
+                    </div>
+                  </div>
+                ) : (
+                  /* Non-featured: Compact text header */
+                  <div className="px-6 sm:px-8 pt-10 pb-6 relative overflow-hidden">
+                    <div
+                      className="absolute top-0 left-0 right-0 h-1"
+                      style={{ background: "linear-gradient(90deg, var(--violet), var(--cyan))" }}
+                    />
+                    <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full opacity-10 blur-3xl pointer-events-none"
+                      style={{ background: "var(--violet)" }} />
+                    <div className="flex gap-2 mb-4">
                       <Badge status={selectedProject.status} />
-                      {selectedProject.featured && <Badge status="featured" />}
                     </div>
                     <h2
-                      className="text-2xl sm:text-4xl font-bold"
+                      className="text-2xl sm:text-3xl font-bold"
                       style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
                     >
                       {selectedProject.title}
                     </h2>
                   </div>
-                </div>
+                )}
 
                 {/* Body Content */}
                 <div className="p-6 sm:p-8">

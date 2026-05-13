@@ -119,7 +119,7 @@ export function About() {
 
             {/* Tech interests */}
             <div className="mt-8 flex flex-wrap gap-2">
-              {["Java", "Python", "React.js", "Node.js", "MongoDB", "Express", "Three.js", "Data Science"].map(
+              {["Java", "Python", "React.js", "Node.js", "MongoDB", "Express", "Three.js", "Data Science","AI/ML"].map(
                 (tag) => (
                   <span
                     key={tag}
