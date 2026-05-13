@@ -16,7 +16,7 @@ export interface Achievement {
 export const achievements: Achievement[] = [
   {
     id: "projects",
-    value: 15,
+    value: 10,
     suffix: "+",
     label: "Major Projects",
     description: "Full-stack apps, 3D visualizers, & AI platforms",
@@ -35,7 +35,7 @@ export const achievements: Achievement[] = [
   {
     id: "cgpa",
     value: 8,
-    suffix: ".86",
+    suffix: ".88",
     label: "CGPA",
     description: "VIT Bhopal University (CS Major)",
     icon: "Trophy",
@@ -44,7 +44,7 @@ export const achievements: Achievement[] = [
   {
     id: "highschool",
     value: 91,
-    suffix: "%",
+    suffix: ".2%",
     label: "Class 12th",
     description: "Bal Bharati Public School",
     icon: "Star",
