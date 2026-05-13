@@ -11,13 +11,13 @@ import { AnimatedText } from "@/components/ui/AnimatedText";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/social";
 import { Code as CodeIcon, X, ExternalLink, Mail as MailIcon, Trophy } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa6";
 import { SiLeetcode, SiCodeforces } from "react-icons/si";
 
 const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   Code: FaGithub,
   Linkedin: FaLinkedin,
-  Twitter: FaXTwitter,
+  Instagram: FaInstagram,
   Code2: SiLeetcode,
   Trophy: SiCodeforces,
   Mail: FaEnvelope,

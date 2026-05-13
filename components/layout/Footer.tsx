@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter, FaEnvelope } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa6";
 import { personal } from "@/data/personal";
 
 export function Footer() {
@@ -40,7 +40,7 @@ export function Footer() {
             {[
               { icon: FaGithub, href: `https://github.com/${personal.github}`, label: "GitHub" },
               { icon: FaLinkedin, href: `https://linkedin.com/in/${personal.linkedin}`, label: "LinkedIn" },
-              { icon: FaXTwitter, href: `https://twitter.com/${personal.twitter}`, label: "Twitter" },
+              { icon: FaInstagram, href: `https://instagram.com/${personal.instagram}`, label: "Instagram" },
               { icon: FaEnvelope, href: `mailto:${personal.email}`, label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <motion.a

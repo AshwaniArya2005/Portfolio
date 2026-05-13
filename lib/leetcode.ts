@@ -14,10 +14,14 @@ export interface LeetCodeStats {
   easyTotal: number;
   mediumTotal: number;
   hardTotal: number;
-  acceptanceRate: number;
   ranking: number;
-  streak?: number;
-  reputation?: number;
+  reputation: number;
+  streak: number;
+  totalActiveDays: number;
+  contestRating: number;
+  contestGlobalRanking: number;
+  contestTopPercentage: number;
+  contestCount: number;
 }
 
 export async function fetchLeetCodeStats(

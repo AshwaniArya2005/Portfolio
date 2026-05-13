@@ -46,13 +46,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: personal.siteTitle,
-    description: personal.siteDescription,
-    creator: `@${personal.twitter}`,
-    images: [personal.ogImage],
-  },
+
   robots: {
     index: true,
     follow: true,

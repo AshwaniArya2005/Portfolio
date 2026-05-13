@@ -29,13 +29,14 @@ export const socialLinks: SocialLink[] = [
     color: "#0A66C2",
     hoverColor: "#0A66C2",
   },
+
   {
-    id: "twitter",
-    label: "Twitter / X",
-    url: `https://twitter.com/${personal.twitter}`,
-    icon: "Twitter",
-    color: "#1DA1F2",
-    hoverColor: "#1DA1F2",
+    id: "instagram",
+    label: "Instagram",
+    url: `https://instagram.com/${personal.instagram}`,
+    icon: "Instagram",
+    color: "#E1306C",
+    hoverColor: "#E1306C",
   },
   {
     id: "leetcode",

@@ -23,7 +23,7 @@ export const personal = {
   // Social & links
   github: "AshwaniArya2005",
   linkedin: "ashwani-arya2005",
-  twitter: "", // Left blank as not in resume
+  instagram: "Ashwani._.arya", // Replaced Twitter with Instagram
   leetcode: "Ashwani_Arya2005",
   codeforces: "Ashwani2005",
 

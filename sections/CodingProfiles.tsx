@@ -1,10 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Star, GitFork, TrendingUp, Zap, Target } from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Star, GitFork, TrendingUp, Zap, Target,
+  Award, Activity, Users, BookOpen,
+  ChevronRight, Calendar, BarChart3,
+  PieChart as PieIcon, Info
+} from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { SiLeetcode, SiCodeforces } from "react-icons/si";
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid,
+  Tooltip, ResponsiveContainer, PieChart, Pie, Cell,
+  BarChart, Bar
+} from "recharts";
+import { GitHubCalendar } from "react-github-calendar";
+
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { GlowCard } from "@/components/ui/GlowCard";
 import { personal } from "@/data/personal";
@@ -12,343 +24,465 @@ import { fetchLeetCodeStats, type LeetCodeStats } from "@/lib/leetcode";
 import { fetchCodeforcesStats, getCFRankColor, type CodeforcesStats } from "@/lib/codeforces";
 import { fetchGitHubUser, fetchGitHubStats, type GitHubUser } from "@/lib/github";
 
-function SkeletonCard() {
+// ── Components ──────────────────────────────────────────────────
+
+function StatWidget({ label, value, icon, color, subValue }: {
+  label: string; value: string | number; icon: React.ReactNode; color: string; subValue?: string
+}) {
   return (
-    <div className="p-6 rounded-2xl shimmer" style={{ border: "1px solid var(--border)", minHeight: 200 }} />
-  );
-}
-
-function DonutChart({ easy, medium, hard, total }: { easy: number; medium: number; hard: number; total: number }) {
-  const radius = 36;
-  const circumference = 2 * Math.PI * radius;
-  const easyPct = total > 0 ? easy / total : 0;
-  const medPct = total > 0 ? medium / total : 0;
-  const hardPct = total > 0 ? hard / total : 0;
-
-  const easyDash = easyPct * circumference;
-  const medDash = medPct * circumference;
-  const hardDash = hardPct * circumference;
-  const emptyDash = circumference - easyDash - medDash - hardDash;
-
-  return (
-    <svg width="88" height="88" viewBox="0 0 88 88" className="-rotate-90">
-      <circle cx="44" cy="44" r={radius} fill="none" stroke="var(--surface-2)" strokeWidth="10" />
-      <motion.circle
-        cx="44" cy="44" r={radius} fill="none" stroke="#10b981" strokeWidth="10"
-        strokeDasharray={`${easyDash} ${circumference - easyDash}`}
-        strokeDashoffset={0}
-        initial={{ strokeDasharray: `0 ${circumference}` }}
-        whileInView={{ strokeDasharray: `${easyDash} ${circumference - easyDash}` }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-      />
-      <motion.circle
-        cx="44" cy="44" r={radius} fill="none" stroke="#f59e0b" strokeWidth="10"
-        strokeDasharray={`${medDash} ${circumference - medDash}`}
-        strokeDashoffset={-easyDash}
-        initial={{ strokeDasharray: `0 ${circumference}` }}
-        whileInView={{ strokeDasharray: `${medDash} ${circumference - medDash}` }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-      />
-      <motion.circle
-        cx="44" cy="44" r={radius} fill="none" stroke="#ef4444" strokeWidth="10"
-        strokeDasharray={`${hardDash} ${circumference - hardDash}`}
-        strokeDashoffset={-(easyDash + medDash)}
-        initial={{ strokeDasharray: `0 ${circumference}` }}
-        whileInView={{ strokeDasharray: `${hardDash} ${circumference - hardDash}` }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
-      />
-    </svg>
-  );
-}
-
-function StatPill({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <div className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: "var(--surface-2)" }}>
-      <span className="text-xs" style={{ color: "var(--text-muted)" }}>{label}</span>
-      <span className="text-sm font-bold" style={{ color, fontFamily: "var(--font-mono)" }}>{value}</span>
+    <div className="flex flex-col p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
+      <div className="flex items-center justify-between mb-2">
+        <span className="p-1.5 rounded-lg bg-white/5" style={{ color }}>{icon}</span>
+        {subValue && <span className="text-[10px] font-mono text-white/30 uppercase">{subValue}</span>}
+      </div>
+      <div className="text-xl font-bold font-heading text-white">{value}</div>
+      <div className="text-[10px] text-white/40 uppercase tracking-widest font-medium mt-0.5">{label}</div>
     </div>
   );
 }
+
+function LoadingSkeleton() {
+  return (
+    <div className="grid lg:grid-cols-3 gap-6 animate-pulse">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="h-[600px] rounded-3xl bg-white/5 border border-white/10" />
+      ))}
+    </div>
+  );
+}
+
+// ── Main Section ────────────────────────────────────────────────
 
 export function CodingProfiles() {
   const [lcStats, setLcStats] = useState<LeetCodeStats | null>(null);
   const [cfStats, setCfStats] = useState<CodeforcesStats | null>(null);
   const [ghUser, setGhUser] = useState<GitHubUser | null>(null);
-  const [ghStats, setGhStats] = useState<{ totalStars: number; totalForks: number; repoCount: number } | null>(null);
+  const [ghStats, setGhStats] = useState<{ totalStars: number; totalForks: number; repoCount: number; languages: Record<string, number> } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     async function load() {
       setLoading(true);
-      const [lc, cf, gh, ghs] = await Promise.all([
-        fetchLeetCodeStats(personal.leetcode),
-        fetchCodeforcesStats(personal.codeforces),
-        fetchGitHubUser(personal.github),
-        fetchGitHubStats(personal.github),
-      ]);
-      setLcStats(lc);
-      setCfStats(cf);
-      setGhUser(gh);
-      setGhStats(ghs);
-      setLoading(false);
+      try {
+        const [lc, cf, gh, ghs] = await Promise.all([
+          fetchLeetCodeStats(personal.leetcode),
+          fetchCodeforcesStats(personal.codeforces),
+          fetchGitHubUser(personal.github),
+          fetchGitHubStats(personal.github),
+        ]);
+        setLcStats(lc);
+        setCfStats(cf);
+        setGhUser(gh);
+        setGhStats(ghs as any);
+      } catch (err) {
+        console.error("Error loading profiles:", err);
+      } finally {
+        setLoading(false);
+      }
     }
     load();
   }, []);
 
+  // Prepare chart data
+  const lcChartData = useMemo(() => {
+    if (!lcStats) return [];
+    return [
+      { name: "Easy", value: lcStats.easySolved, color: "#10b981" },
+      { name: "Medium", value: lcStats.mediumSolved, color: "#f59e0b" },
+      { name: "Hard", value: lcStats.hardSolved, color: "#ef4444" },
+    ];
+  }, [lcStats]);
+
+  const cfChartData = useMemo(() => {
+    if (!cfStats?.ratingHistory || cfStats.ratingHistory.length === 0) return [];
+    return cfStats.ratingHistory.map(c => ({
+      name: c.contestName,
+      rating: c.newRating,
+      date: new Date(c.ratingUpdateTimeSeconds * 1000).toLocaleDateString()
+    }));
+  }, [cfStats]);
+
+  const ghLangData = useMemo(() => {
+    if (!ghStats?.languages) return [];
+    return Object.entries(ghStats.languages)
+      .map(([name, value]) => ({ name, value }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
+  }, [ghStats]);
+
+  if (loading || !hasMounted) return <LoadingSkeleton />;
+
   return (
     <SectionWrapper
       id="coding-profiles"
-      label="Competitive Programming"
-      title="Coding Profiles"
-      subtitle="Real-time stats from my competitive programming and open source journey."
+      label="Analytics"
+      title="Coding Dashboard"
+      subtitle="Dynamic performance metrics from competitive programming and open-source contributions."
     >
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* LeetCode */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+
+        {/* LEETCODE DASHBOARD */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          className="h-full"
         >
-          {loading ? <SkeletonCard /> : (
-            <GlowCard className="p-6 h-full" glowColor="rgba(255,161,22,0.25)">
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(255,161,22,0.15)" }}>
-                  <SiLeetcode size={20} style={{ color: "#FFA116" }} />
+          <GlowCard className="p-6 h-full flex flex-col" glowColor="rgba(255,161,22,0.15)">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#FFA116]/10 border border-[#FFA116]/20">
+                  <SiLeetcode size={24} className="text-[#FFA116]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm" style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}>LeetCode</h3>
-                  <a href={`https://leetcode.com/${personal.leetcode}`} target="_blank" rel="noopener noreferrer"
-                    className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                    @{personal.leetcode}
-                  </a>
+                  <h3 className="text-lg font-bold text-white font-heading leading-tight">LeetCode</h3>
+                  <p className="text-xs text-white/40 font-mono tracking-tight">@{personal.leetcode}</p>
                 </div>
               </div>
+              <a
+                href={`https://leetcode.com/${personal.leetcode}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                <ChevronRight size={16} className="text-white/60" />
+              </a>
+            </div>
 
-              {lcStats ? (
-                <>
-                  {/* Donut + total */}
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="relative">
-                      <DonutChart
-                        easy={lcStats.easySolved}
-                        medium={lcStats.mediumSolved}
-                        hard={lcStats.hardSolved}
-                        total={lcStats.totalSolved}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-lg font-bold" style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}>
-                          {lcStats.totalSolved}
-                        </span>
-                      </div>
+            {lcStats ? (
+              <div className="flex-1 flex flex-col space-y-6">
+                {/* Solved Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="col-span-2 p-4 rounded-2xl bg-gradient-to-br from-[#FFA116]/10 to-transparent border border-[#FFA116]/10 flex items-center justify-between">
+                    <div>
+                      <div className="text-3xl font-black text-white font-heading">{lcStats.totalSolved}</div>
+                      <div className="text-[10px] text-white/40 uppercase tracking-[0.2em] font-bold">Total Problems Solved</div>
                     </div>
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                        <span style={{ color: "var(--text-muted)" }}>Easy</span>
-                        <span className="ml-auto font-mono" style={{ color: "#10b981" }}>{lcStats.easySolved}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
-                        <span style={{ color: "var(--text-muted)" }}>Medium</span>
-                        <span className="ml-auto font-mono" style={{ color: "#f59e0b" }}>{lcStats.mediumSolved}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
-                        <span style={{ color: "var(--text-muted)" }}>Hard</span>
-                        <span className="ml-auto font-mono" style={{ color: "#ef4444" }}>{lcStats.hardSolved}</span>
-                      </div>
+                    <div className="w-16 h-16">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={lcChartData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={22}
+                            outerRadius={30}
+                            paddingAngle={5}
+                            dataKey="value"
+                            stroke="none"
+                          >
+                            {lcChartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <StatPill label="Global Ranking" value={lcStats.ranking} color="var(--violet-light)" />
-                  </div>
-                </>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 gap-3">
-                  <SiLeetcode size={32} style={{ color: "#FFA116", opacity: 0.5 }} />
-                  <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                    Update <code className="px-1 rounded" style={{ background: "var(--surface-2)" }}>NEXT_PUBLIC_LEETCODE_USERNAME</code> in <code>.env.local</code> to see live stats.
-                  </p>
+                  <StatWidget icon={<Target size={14} />} label="Easy" value={lcStats.easySolved} color="#10b981" subValue={`${Math.round((lcStats.easySolved / lcStats.totalSolved) * 100)}%`} />
+                  <StatWidget icon={<Zap size={14} />} label="Medium" value={lcStats.mediumSolved} color="#f59e0b" subValue={`${Math.round((lcStats.mediumSolved / lcStats.totalSolved) * 100)}%`} />
+                  <StatWidget icon={<Award size={14} />} label="Hard" value={lcStats.hardSolved} color="#ef4444" subValue={`${Math.round((lcStats.hardSolved / lcStats.totalSolved) * 100)}%`} />
+                  <StatWidget icon={<TrendingUp size={14} />} label="Global Rank" value={`#${lcStats.ranking.toLocaleString()}`} color="var(--violet-light)" />
                 </div>
-              )}
-            </GlowCard>
-          )}
+
+                {/* Contest Widget */}
+                {lcStats.contestCount > 0 ? (
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-white/60 tracking-wider">CONTEST PERFORMANCE</span>
+                      <span className="text-[10px] font-mono text-[#FFA116] bg-[#FFA116]/10 px-2 py-0.5 rounded-md">
+                        Rating: {lcStats.contestRating}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <div className="text-lg font-bold text-white">{lcStats.contestGlobalRanking.toLocaleString()}</div>
+                        <div className="text-[10px] text-white/40 uppercase font-medium">World Ranking</div>
+                      </div>
+                      <div className="space-y-1 text-right">
+                        <div className="text-lg font-bold text-white">Top {lcStats.contestTopPercentage}%</div>
+                        <div className="text-[10px] text-white/40 uppercase font-medium">Percentile</div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 text-center">
+                    <div className="text-sm font-bold text-white/40 uppercase tracking-widest">Unrated in Contests</div>
+                  </div>
+                )}
+
+                {/* Streak & Activity */}
+                <div className="mt-auto grid grid-cols-2 gap-3">
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center text-center">
+                    <div className="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center mb-2">
+                      <Activity size={16} className="text-orange-500" />
+                    </div>
+                    <div className="text-xl font-bold text-white font-heading">{lcStats.streak}</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Day Streak</div>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center text-center">
+                    <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2">
+                      <Calendar size={16} className="text-cyan-500" />
+                    </div>
+                    <div className="text-xl font-bold text-white font-heading">{lcStats.totalActiveDays}</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Active Days</div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col items-center justify-center text-white/20">
+                <SiLeetcode size={64} className="mb-4 opacity-10" />
+                <p className="text-xs uppercase tracking-widest font-bold">Data Unavailable</p>
+              </div>
+            )}
+          </GlowCard>
         </motion.div>
 
-        {/* Codeforces */}
+        {/* CODEFORCES DASHBOARD */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
+          className="h-full"
         >
-          {loading ? <SkeletonCard /> : (
-            <GlowCard className="p-6 h-full" glowColor="rgba(31,138,203,0.25)">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(31,138,203,0.15)" }}>
-                  <SiCodeforces size={20} style={{ color: "#1F8ACB" }} />
+          <GlowCard className="p-6 h-full flex flex-col" glowColor="rgba(31,138,203,0.15)">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#1F8ACB]/10 border border-[#1F8ACB]/20">
+                  <SiCodeforces size={24} className="text-[#1F8ACB]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm" style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}>Codeforces</h3>
-                  <a href={`https://codeforces.com/profile/${personal.codeforces}`} target="_blank" rel="noopener noreferrer"
-                    className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                    @{personal.codeforces}
-                  </a>
+                  <h3 className="text-lg font-bold text-white font-heading leading-tight">Codeforces</h3>
+                  <p className="text-xs text-white/40 font-mono tracking-tight">@{personal.codeforces}</p>
                 </div>
               </div>
+              <a
+                href={`https://codeforces.com/profile/${personal.codeforces}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                <ChevronRight size={16} className="text-white/60" />
+              </a>
+            </div>
 
-              {cfStats?.user ? (
-                <div className="space-y-3">
-                  <div className="text-center py-4 rounded-xl mb-4"
-                    style={{ background: `${getCFRankColor(cfStats.user.rank)}15`, border: `1px solid ${getCFRankColor(cfStats.user.rank)}30` }}>
-                    <div className="text-4xl font-bold" style={{ color: getCFRankColor(cfStats.user.rank), fontFamily: "var(--font-heading)" }}>
-                      {cfStats.user.rating}
+            {cfStats?.user ? (
+              <div className="flex-1 flex flex-col space-y-6">
+                {/* Rating Hero */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="text-3xl font-black text-white font-heading leading-none mb-1">{cfStats.user.rating || "—"}</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-[0.1em] font-bold">Current Rating</div>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="text-3xl font-black text-white/60 font-heading leading-none mb-1">{cfStats.user.maxRating || "—"}</div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-[0.1em] font-bold">Peak Rating</div>
+                  </div>
+                </div>
+
+                {/* Rating Chart */}
+                {cfChartData.length > 0 ? (
+                  <div className="p-4 rounded-3xl bg-white/5 border border-white/5">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Rating History</span>
+                      <TrendingUp size={12} className="text-cyan-500" />
                     </div>
-                    <div className="text-xs capitalize mt-1" style={{ color: getCFRankColor(cfStats.user.rank) }}>
-                      {cfStats.user.rank}
+                    <div className="h-40 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={cfChartData}>
+                          <defs>
+                            <linearGradient id="colorRating" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={getCFRankColor(cfStats.user.rank)} stopOpacity={0.3} />
+                              <stop offset="95%" stopColor={getCFRankColor(cfStats.user.rank)} stopOpacity={0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                          <XAxis dataKey="date" hide />
+                          <YAxis domain={['dataMin - 100', 'dataMax + 100']} hide />
+                          <Tooltip
+                            contentStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', fontSize: '10px' }}
+                            itemStyle={{ color: getCFRankColor(cfStats.user.rank) }}
+                          />
+                          <Area type="monotone" dataKey="rating" stroke={getCFRankColor(cfStats.user.rank)} fillOpacity={1} fill="url(#colorRating)" strokeWidth={2} />
+                        </AreaChart>
+                      </ResponsiveContainer>
                     </div>
                   </div>
-                  <StatPill label="Max Rating" value={cfStats.user.maxRating} color="var(--cyan)" />
-                  <StatPill label="Problems Solved" value={cfStats.problemsSolved} color="var(--violet-light)" />
-                  {cfStats.recentContests.length > 0 && (
-                    <div>
-                      <p className="text-xs mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                        Recent contests
-                      </p>
-                      {cfStats.recentContests.slice(0, 3).map((c) => (
-                        <div key={c.contestId} className="flex items-center justify-between py-1.5">
-                          <span className="text-xs truncate max-w-[120px]" style={{ color: "var(--text-secondary)" }}>
-                            {c.contestName.slice(0, 20)}…
-                          </span>
-                          <span className="text-xs font-mono" style={{ color: c.newRating > c.oldRating ? "#10b981" : "#ef4444" }}>
-                            {c.newRating > c.oldRating ? "+" : ""}{c.newRating - c.oldRating}
-                          </span>
+                ) : (
+                  <div className="p-8 rounded-3xl bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center">
+                    <BarChart3 size={24} className="text-white/10 mb-3" />
+                    <div className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">No Rating History</div>
+                    <p className="text-[9px] text-white/20 mt-1 uppercase">Participate in rated contests to see trends</p>
+                  </div>
+                )}
+
+                {/* CP Stats */}
+                <div className="grid grid-cols-2 gap-3">
+                  <StatWidget icon={<BookOpen size={14} />} label="Problems" value={cfStats.problemsSolved} color="var(--violet-light)" subValue="Solved" />
+                  <StatWidget icon={<Users size={14} />} label="Friends" value={cfStats.user.friendOfCount} color="var(--cyan)" subValue="Following" />
+                </div>
+
+                {/* Recent Contests */}
+                <div className="space-y-2">
+                  <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] px-1">Recent Contests</p>
+                  <div className="space-y-1.5">
+                    {cfStats.recentContests.slice(0, 3).map((contest) => (
+                      <div key={contest.contestId} className="group/item flex items-center justify-between p-3 rounded-xl bg-white/5 border border-transparent hover:border-white/10 transition-all">
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[11px] font-bold text-white truncate">{contest.contestName}</div>
+                          <div className="text-[10px] text-white/30 uppercase font-medium">Rank: {contest.rank}</div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 gap-3">
-                  <SiCodeforces size={32} style={{ color: "#1F8ACB", opacity: 0.5 }} />
-                  <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                    Update <code className="px-1 rounded" style={{ background: "var(--surface-2)" }}>NEXT_PUBLIC_CODEFORCES_HANDLE</code> in <code>.env.local</code>.
-                  </p>
-                </div>
-              )}
-            </GlowCard>
-          )}
-        </motion.div>
-
-        {/* GitHub */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          {loading ? <SkeletonCard /> : (
-            <GlowCard className="p-6 h-full" glowColor="rgba(168,85,247,0.25)">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(168,85,247,0.15)" }}>
-                  <FaGithub size={20} style={{ color: "var(--violet-light)" }} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm" style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}>GitHub</h3>
-                  <a href={`https://github.com/${personal.github}`} target="_blank" rel="noopener noreferrer"
-                    className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                    @{personal.github}
-                  </a>
-                </div>
-              </div>
-
-              {ghUser ? (
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { label: "Repos", value: ghUser.public_repos, icon: <FaGithub size={14} /> },
-                      { label: "Followers", value: ghUser.followers, icon: <TrendingUp size={14} /> },
-                      { label: "Stars", value: ghStats?.totalStars ?? 0, icon: <Star size={14} /> },
-                      { label: "Forks", value: ghStats?.totalForks ?? 0, icon: <GitFork size={14} /> },
-                    ].map(({ label, value, icon }) => (
-                      <div key={label} className="flex flex-col items-center justify-center p-3 rounded-xl"
-                        style={{ background: "var(--surface-2)" }}>
-                        <span style={{ color: "var(--violet-light)" }}>{icon}</span>
-                        <span className="text-xl font-bold mt-1" style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}>{value}</span>
-                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>{label}</span>
+                        <div className={`text-xs font-mono font-bold ${contest.newRating >= contest.oldRating ? 'text-emerald-500' : 'text-red-500'}`}>
+                          {contest.newRating >= contest.oldRating ? '+' : ''}{contest.newRating - contest.oldRating}
+                        </div>
                       </div>
                     ))}
                   </div>
-                  {/* Contribution graph placeholder */}
-                  <div className="mt-4 p-3 rounded-xl" style={{ background: "var(--surface-2)" }}>
-                    <p className="text-xs mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                      contribution activity
-                    </p>
-                    <div className="flex gap-0.5 flex-wrap">
-                      {Array.from({ length: 52 }).map((_, i) => (
-                        <div key={i} className="flex flex-col gap-0.5">
-                          {Array.from({ length: 7 }).map((_, j) => (
-                            <div
-                              key={j}
-                              className="w-2 h-2 rounded-sm"
-                              style={{
-                                background: Math.random() > 0.6
-                                  ? `rgba(124,58,237,${Math.random() * 0.8 + 0.2})`
-                                  : "var(--surface)",
-                              }}
-                            />
-                          ))}
+                </div>
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col items-center justify-center text-white/20">
+                <SiCodeforces size={64} className="mb-4 opacity-10" />
+                <p className="text-xs uppercase tracking-widest font-bold">Data Unavailable</p>
+              </div>
+            )}
+          </GlowCard>
+        </motion.div>
+
+        {/* GITHUB DASHBOARD */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="h-full"
+        >
+          <GlowCard className="p-6 h-full flex flex-col" glowColor="rgba(168,85,247,0.15)">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/5 border border-white/10">
+                  <FaGithub size={24} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white font-heading leading-tight">GitHub</h3>
+                  <p className="text-xs text-white/40 font-mono tracking-tight">@{personal.github}</p>
+                </div>
+              </div>
+              <a
+                href={`https://github.com/${personal.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+              >
+                <ChevronRight size={16} className="text-white/60" />
+              </a>
+            </div>
+
+            {ghUser ? (
+              <div className="flex-1 flex flex-col space-y-6">
+                {/* Real Contribution Calendar */}
+                <div className="p-4 rounded-3xl bg-white/5 border border-white/10 overflow-hidden">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Activity Calendar</span>
+                    <Activity size={12} className="text-emerald-500" />
+                  </div>
+                  <div className="github-calendar-wrapper overflow-x-auto text-[8px] sm:text-[10px] scrollbar-hide">
+                    <div className="min-w-[600px] sm:min-w-0">
+                      <GitHubCalendar
+                        username={personal.github}
+                        blockSize={8}
+                        blockMargin={3}
+                        fontSize={10}
+                        colorScheme="dark"
+                        theme={{
+                          dark: ['rgba(255,255,255,0.05)', 'rgba(124,58,237,0.4)', 'rgba(124,58,237,0.6)', 'rgba(124,58,237,0.8)', '#a855f7'],
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Primary Stats */}
+                <div className="grid grid-cols-2 gap-3">
+                  <StatWidget icon={<Star size={14} />} label="Stars" value={ghStats?.totalStars ?? 0} color="#f59e0b" subValue="Earned" />
+                  <StatWidget icon={<GitFork size={14} />} label="Repos" value={ghUser.public_repos} color="var(--cyan)" subValue="Public" />
+                </div>
+
+                {/* Language Distribution */}
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Stack Distribution</span>
+                    <PieIcon size={12} className="text-violet-500" />
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="w-20 h-20">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={ghLangData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={25}
+                            outerRadius={35}
+                            dataKey="value"
+                            stroke="none"
+                          >
+                            {ghLangData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={`rgba(124,58,237, ${1 - index * 0.15})`} />
+                            ))}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <div className="flex-1 grid grid-cols-1 gap-1.5">
+                      {ghLangData.map((lang, i) => (
+                        <div key={lang.name} className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: `rgba(124,58,237, ${1 - i * 0.15})` }} />
+                            <span className="text-[10px] font-bold text-white/70 uppercase">{lang.name}</span>
+                          </div>
+                          <span className="text-[10px] font-mono text-white/30">{lang.value}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 gap-3">
-                  <FaGithub size={32} style={{ color: "var(--violet-light)", opacity: 0.5 }} />
-                  <p className="text-xs text-center" style={{ color: "var(--text-muted)" }}>
-                    Update <code className="px-1 rounded" style={{ background: "var(--surface-2)" }}>NEXT_PUBLIC_GITHUB_USERNAME</code> in <code>.env.local</code>.
-                  </p>
+
+                {/* Social Stats */}
+                <div className="mt-auto grid grid-cols-2 gap-3">
+                  <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500"><Users size={14} /></div>
+                    <div>
+                      <div className="text-sm font-bold text-white leading-none">{ghUser.followers}</div>
+                      <div className="text-[9px] text-white/40 uppercase font-medium">Followers</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500"><GitFork size={14} /></div>
+                    <div>
+                      <div className="text-sm font-bold text-white leading-none">{ghUser.following}</div>
+                      <div className="text-[9px] text-white/40 uppercase font-medium">Following</div>
+                    </div>
+                  </div>
                 </div>
-              )}
-            </GlowCard>
-          )}
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col items-center justify-center text-white/20">
+                <FaGithub size={64} className="mb-4 opacity-10" />
+                <p className="text-xs uppercase tracking-widest font-bold">Data Unavailable</p>
+              </div>
+            )}
+          </GlowCard>
         </motion.div>
       </div>
 
-      {/* Profile links */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="flex flex-wrap justify-center gap-4 mt-10"
-      >
-        {[
-          { label: "LeetCode Profile", href: `https://leetcode.com/${personal.leetcode}`, color: "#FFA116" },
-          { label: "Codeforces Profile", href: `https://codeforces.com/profile/${personal.codeforces}`, color: "#1F8ACB" },
-          { label: "GitHub Profile", href: `https://github.com/${personal.github}`, color: "var(--violet-light)" },
-        ].map(({ label, href, color }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105"
-            style={{ background: "var(--surface)", border: "1px solid var(--border)", color }}
-          >
-            {label}
-          </a>
-        ))}
-      </motion.div>
+
     </SectionWrapper>
   );
 }
+

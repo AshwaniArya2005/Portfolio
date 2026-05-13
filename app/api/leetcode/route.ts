@@ -21,9 +21,16 @@ const query = `
           count
         }
       }
+      userCalendar {
+        streak
+        totalActiveDays
+      }
     }
     userContestRanking(username: $username) {
+      attendedContestsCount
       rating
+      globalRanking
+      topPercentage
     }
     allQuestionsCount {
       difficulty
@@ -54,6 +61,7 @@ export async function GET(request: Request) {
     if (!res.ok) throw new Error("LeetCode API error");
     const data = await res.json();
     const user = data?.data?.matchedUser;
+    const contest = data?.data?.userContestRanking;
     
     if (!user) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -75,9 +83,14 @@ export async function GET(request: Request) {
       easyTotal: findCount(allQ, "Easy"),
       mediumTotal: findCount(allQ, "Medium"),
       hardTotal: findCount(allQ, "Hard"),
-      acceptanceRate: 0,
       ranking: user.profile?.ranking ?? 0,
       reputation: user.profile?.reputation ?? 0,
+      streak: user.userCalendar?.streak ?? 0,
+      totalActiveDays: user.userCalendar?.totalActiveDays ?? 0,
+      contestRating: Math.round(contest?.rating ?? 0),
+      contestGlobalRanking: contest?.globalRanking ?? 0,
+      contestTopPercentage: contest?.topPercentage ?? 0,
+      contestCount: contest?.attendedContestsCount ?? 0,
     };
 
     return NextResponse.json(stats);

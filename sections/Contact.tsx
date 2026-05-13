@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, Check, Copy, MapPin } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { GlowCard } from "@/components/ui/GlowCard";
@@ -134,7 +134,7 @@ export function Contact() {
               {[
                 { icon: FaGithub, href: `https://github.com/${personal.github}`, label: "GitHub" },
                 { icon: FaLinkedin, href: `https://linkedin.com/in/${personal.linkedin}`, label: "LinkedIn" },
-                { icon: FaXTwitter, href: `https://twitter.com/${personal.twitter}`, label: "Twitter" },
+                { icon: FaInstagram, href: `https://instagram.com/${personal.instagram}`, label: "Instagram" },
               ].map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={label}

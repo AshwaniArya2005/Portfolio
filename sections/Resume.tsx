@@ -73,7 +73,7 @@ export function Resume() {
             <span className="w-3 h-3 rounded-full bg-yellow-400" />
             <span className="w-3 h-3 rounded-full bg-green-400" />
             <div
-              className="flex-1 mx-4 px-3 py-1 rounded-md text-xs text-center truncate"
+              className="flex-1 mx-4 h-5 rounded-full text-xs text-center truncate"
               style={{
                 background: "var(--surface)",
                 color: "var(--text-muted)",
@@ -81,7 +81,7 @@ export function Resume() {
                 border: "1px solid var(--border)",
               }}
             >
-              {personal.siteUrl}/resume.pdf
+              
             </div>
           </div>
 
@@ -118,17 +118,7 @@ export function Resume() {
           </div>
         </motion.div>
 
-        {/* Hint */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="text-center text-xs mt-4"
-          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
-        >
-          Replace <code className="px-1 py-0.5 rounded" style={{ background: "var(--surface-2)" }}>public/resume.pdf</code> to update your resume instantly
-        </motion.p>
+
       </div>
     </SectionWrapper>
   );

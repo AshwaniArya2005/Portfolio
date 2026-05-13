@@ -27,7 +27,27 @@ export interface CodeforcesContest {
 export interface CodeforcesStats {
   user: CodeforcesUser | null;
   recentContests: CodeforcesContest[];
+  ratingHistory: CodeforcesContest[];
   problemsSolved: number;
+}
+
+export async function fetchCodeforcesRatingHistory(
+  handle: string
+): Promise<CodeforcesContest[]> {
+  if (!handle || handle === "your-codeforces-handle") return [];
+
+  try {
+    const res = await fetch(`${CF_API}/user.rating?handle=${handle}`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) throw new Error("CF API error");
+    const data = await res.json();
+    if (data.status !== "OK") return [];
+    return data.result;
+  } catch (error) {
+    console.error("Failed to fetch Codeforces rating history:", error);
+    return [];
+  }
 }
 
 export async function fetchCodeforcesUser(
@@ -49,34 +69,15 @@ export async function fetchCodeforcesUser(
   }
 }
 
-export async function fetchCodeforcesContests(
-  handle: string,
-  limit: number = 5
-): Promise<CodeforcesContest[]> {
-  if (!handle || handle === "your-codeforces-handle") return [];
-
-  try {
-    const res = await fetch(`${CF_API}/user.rating?handle=${handle}`, {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) throw new Error("CF API error");
-    const data = await res.json();
-    if (data.status !== "OK") return [];
-    const contests: CodeforcesContest[] = data.result;
-    return contests.slice(-limit).reverse();
-  } catch (error) {
-    console.error("Failed to fetch Codeforces contests:", error);
-    return [];
-  }
-}
-
 export async function fetchCodeforcesStats(
   handle: string
 ): Promise<CodeforcesStats> {
-  const [user, contests] = await Promise.all([
+  const [user, ratingHistory] = await Promise.all([
     fetchCodeforcesUser(handle),
-    fetchCodeforcesContests(handle, 5),
+    fetchCodeforcesRatingHistory(handle),
   ]);
+
+  const recentContests = [...ratingHistory].reverse().slice(0, 5);
 
   // Fetch problem submissions to count unique solved
   let problemsSolved = 0;
@@ -103,7 +104,7 @@ export async function fetchCodeforcesStats(
     // ignore
   }
 
-  return { user, recentContests: contests, problemsSolved };
+  return { user, recentContests, ratingHistory, problemsSolved };
 }
 
 // Color for CF rank
