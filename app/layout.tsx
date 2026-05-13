@@ -5,7 +5,6 @@ import { CustomCursor } from "@/components/layout/CustomCursor";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { personal } from "@/data/personal";
 import "./globals.css";
@@ -84,8 +83,6 @@ export default function RootLayout({
 
           {/* Main content */}
           <main>{children}</main>
-
-          <Footer />
 
           {/* Toast notifications */}
           <Toaster

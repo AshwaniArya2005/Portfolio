@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Send, Check, Copy, MapPin } from "lucide-react";
+import { Mail, Send, Check, Copy, MapPin, Heart } from "lucide-react";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -119,7 +119,7 @@ export function Contact() {
             <div className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
               </span>
               {personal.availability}
             </div>
@@ -127,31 +127,39 @@ export function Contact() {
 
           {/* Social links */}
           <div>
-            <p className="text-xs mb-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-              // Social
+            <p className="text-[10px] uppercase tracking-[0.2em] mb-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+              // Connect
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               {[
-                { icon: FaGithub, href: `https://github.com/${personal.github}`, label: "GitHub" },
-                { icon: FaLinkedin, href: `https://linkedin.com/in/${personal.linkedin}`, label: "LinkedIn" },
-                { icon: FaInstagram, href: `https://instagram.com/${personal.instagram}`, label: "Instagram" },
-              ].map(({ icon: Icon, href, label }) => (
+                { icon: FaGithub, href: `https://github.com/${personal.github}`, label: "GitHub", color: "var(--text-primary)" },
+                { icon: FaLinkedin, href: `https://linkedin.com/in/${personal.linkedin}`, label: "LinkedIn", color: "#0A66C2" },
+                { icon: FaInstagram, href: `https://instagram.com/${personal.instagram}`, label: "Instagram", color: "#E1306C" },
+              ].map(({ icon: Icon, href, label, color }) => (
                 <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  whileHover={{ scale: 1.15, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2.5 rounded-xl transition-colors"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    y: -4,
+                    transition: { type: "spring", stiffness: 400, damping: 10 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative p-3 rounded-2xl transition-all duration-300 group overflow-hidden"
                   style={{
                     background: "var(--surface)",
                     border: "1px solid var(--border)",
-                    color: "var(--text-secondary)",
                   }}
                 >
-                  <Icon size={18} />
+                  {/* Subtle hover glow */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                    style={{ background: color }}
+                  />
+                  <Icon size={20} className="relative z-10 transition-colors duration-300 group-hover:text-white" style={{ color: "var(--text-secondary)" }} />
                 </motion.a>
               ))}
             </div>
@@ -318,6 +326,44 @@ export function Contact() {
           </GlowCard>
         </motion.div>
       </div>
+
+      {/* Footer-style Copyright */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="mt-16 sm:mt-24 flex flex-col items-center gap-6"
+      >
+        {/* Premium Divider Line */}
+        <div className="w-full max-w-md h-px relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
+        </div>
+
+        {/* Closing Message */}
+        <p 
+          className="text-[11px] sm:text-xs tracking-widest opacity-70 uppercase"
+          style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}
+        >
+          Thanks for stopping by ✨
+        </p>
+
+        {/* Copyright Text */}
+        <p
+          className="text-[10px] sm:text-[11px] tracking-wide flex flex-wrap items-center justify-center gap-1.5 opacity-80"
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
+        >
+          © {new Date().getFullYear()} {personal.name} · Built with{" "}
+          <Heart size={10} fill="currentColor" className="text-violet-400" />
+          {" "}using Next.js & Framer Motion
+        </p>
+      </motion.div>
     </SectionWrapper>
   );
 }
+

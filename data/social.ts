@@ -54,12 +54,5 @@ export const socialLinks: SocialLink[] = [
     color: "#1F8ACB",
     hoverColor: "#1F8ACB",
   },
-  {
-    id: "email",
-    label: "Email",
-    url: `mailto:${personal.email}`,
-    icon: "Mail",
-    color: "#06b6d4",
-    hoverColor: "#06b6d4",
-  },
+
 ];
