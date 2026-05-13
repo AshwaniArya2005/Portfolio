@@ -62,122 +62,122 @@ export function Projects() {
                                 background: `linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(6,182,212,0.2) 100%)`,
                               }}
                             >
-                            {/* Grid pattern (placeholder) */}
-                            <div
-                              className="absolute inset-0 opacity-30"
-                              style={{
-                                backgroundImage:
-                                  "linear-gradient(rgba(124,58,237,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.3) 1px, transparent 1px)",
-                                backgroundSize: "30px 30px",
-                              }}
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <span className="text-5xl font-bold gradient-text opacity-60"
-                                style={{ fontFamily: "var(--font-heading)" }}>
-                                {project.title.slice(0, 2).toUpperCase()}
-                              </span>
-                            </div>
-                            
-                            {/* Actual Image */}
-                            {project.image && (
-                              <img
-                                src={project.image}
-                                alt={project.title}
-                                className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).style.opacity = '0';
+                              {/* Grid pattern (placeholder) */}
+                              <div
+                                className="absolute inset-0 opacity-30"
+                                style={{
+                                  backgroundImage:
+                                    "linear-gradient(rgba(124,58,237,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.3) 1px, transparent 1px)",
+                                  backgroundSize: "30px 30px",
                                 }}
                               />
-                            )}
-                            
-                            {/* Gradient Overlay for better blend */}
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[var(--surface)]/80 via-transparent to-transparent z-15 opacity-0 md:opacity-100 mix-blend-multiply" />
-                            
-                            {/* Overlay on hover */}
-                            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 z-15 flex items-center justify-center backdrop-blur-[2px]">
-                               <span className="text-white text-sm font-semibold px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                 View Project Details
-                               </span>
-                            </div>
-
-                            {/* Status badge */}
-                            <div className="absolute top-4 left-4 z-20">
-                              <Badge status={project.status} />
-                            </div>
-                            {project.featured && (
-                              <div className="absolute top-4 right-4 z-20">
-                                <Badge status="featured" />
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Content */}
-                          <div className="w-full md:w-[55%] lg:w-[50%] p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col flex-1 justify-center relative bg-[var(--surface)]/50">
-                            {/* Subtle background glow */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--violet-light)]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                            
-                            <h3
-                              className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-[var(--violet-light)] transition-colors"
-                              style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
-                            >
-                              {project.title}
-                            </h3>
-                            <p
-                              className="text-sm sm:text-base leading-relaxed mb-8 flex-1 text-pretty"
-                              style={{ color: "var(--text-secondary)" }}
-                            >
-                              {project.description}
-                            </p>
-
-                            {/* Tech stack */}
-                            <div className="flex flex-wrap gap-2.5 mb-8">
-                              {project.tech.slice(0, 5).map((tech) => (
-                                <span
-                                  key={tech}
-                                  className="px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide"
-                                  style={{
-                                    background: "rgba(124,58,237,0.08)",
-                                    color: "var(--violet-light)",
-                                    border: "1px solid rgba(124,58,237,0.15)",
-                                    fontFamily: "var(--font-mono)",
-                                  }}
-                                >
-                                  {tech}
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-5xl font-bold gradient-text opacity-60"
+                                  style={{ fontFamily: "var(--font-heading)" }}>
+                                  {project.title.slice(0, 2).toUpperCase()}
                                 </span>
-                              ))}
-                              {project.tech.length > 5 && (
-                                <span className="text-[11px] text-muted-foreground self-center ml-1 font-mono tracking-wide px-2 py-1 bg-white/5 rounded-md">+{project.tech.length - 5}</span>
+                              </div>
+
+                              {/* Actual Image */}
+                              {project.image && (
+                                <img
+                                  src={project.image}
+                                  alt={project.title}
+                                  className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.opacity = '0';
+                                  }}
+                                />
+                              )}
+
+                              {/* Gradient Overlay for better blend */}
+                              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[var(--surface)]/80 via-transparent to-transparent z-15 opacity-0 md:opacity-100 mix-blend-multiply" />
+
+                              {/* Overlay on hover */}
+                              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 z-15 flex items-center justify-center backdrop-blur-[2px]">
+                                <span className="text-white text-sm font-semibold px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                  View Project Details
+                                </span>
+                              </div>
+
+                              {/* Status badge */}
+                              <div className="absolute top-4 left-4 z-20">
+                                <Badge status={project.status} />
+                              </div>
+                              {project.featured && (
+                                <div className="absolute top-4 right-4 z-20">
+                                  <Badge status="featured" />
+                                </div>
                               )}
                             </div>
 
-                            {/* Links */}
-                            <div className="flex flex-wrap sm:flex-nowrap gap-4 mt-auto" onClick={(e) => e.stopPropagation()}>
-                              {project.githubUrl && (
-                                <MagneticButton
-                                  href={project.githubUrl}
-                                  target="_blank"
-                                  variant="secondary"
-                                  size="md"
-                                  className="gap-2 flex-1 justify-center whitespace-nowrap"
-                                >
-                                  <Code size={18} />
-                                  Source Code
-                                </MagneticButton>
-                              )}
-                              {project.liveUrl && project.liveUrl !== "#" && (
-                                <MagneticButton
-                                  href={project.liveUrl}
-                                  target="_blank"
-                                  variant="primary"
-                                  size="md"
-                                  className="gap-2 flex-1 justify-center whitespace-nowrap shadow-lg shadow-[var(--violet-light)]/20"
-                                >
-                                  <ExternalLink size={18} />
-                                  Live Demo
-                                </MagneticButton>
-                              )}
+                            {/* Content */}
+                            <div className="w-full md:w-[55%] lg:w-[50%] p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col flex-1 justify-center relative bg-[var(--surface)]/50">
+                              {/* Subtle background glow */}
+                              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--violet-light)]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+                              <h3
+                                className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-[var(--violet-light)] transition-colors"
+                                style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
+                              >
+                                {project.title}
+                              </h3>
+                              <p
+                                className="text-sm sm:text-base leading-relaxed mb-8 flex-1 text-pretty"
+                                style={{ color: "var(--text-secondary)" }}
+                              >
+                                {project.description}
+                              </p>
+
+                              {/* Tech stack */}
+                              <div className="flex flex-wrap gap-2.5 mb-8">
+                                {project.tech.slice(0, 5).map((tech) => (
+                                  <span
+                                    key={tech}
+                                    className="px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide"
+                                    style={{
+                                      background: "rgba(124,58,237,0.08)",
+                                      color: "var(--violet-light)",
+                                      border: "1px solid rgba(124,58,237,0.15)",
+                                      fontFamily: "var(--font-mono)",
+                                    }}
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                                {project.tech.length > 5 && (
+                                  <span className="text-[11px] text-muted-foreground self-center ml-1 font-mono tracking-wide px-2 py-1 bg-white/5 rounded-md">+{project.tech.length - 5}</span>
+                                )}
+                              </div>
+
+                              {/* Links */}
+                              <div className="flex flex-wrap sm:flex-nowrap gap-4 mt-auto" onClick={(e) => e.stopPropagation()}>
+                                {project.githubUrl && (
+                                  <MagneticButton
+                                    href={project.githubUrl}
+                                    target="_blank"
+                                    variant="secondary"
+                                    size="md"
+                                    className="gap-2 flex-1 justify-center whitespace-nowrap"
+                                  >
+                                    <Code size={18} />
+                                    Source Code
+                                  </MagneticButton>
+                                )}
+                                {project.liveUrl && project.liveUrl !== "#" && (
+                                  <MagneticButton
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    variant="primary"
+                                    size="md"
+                                    className="gap-2 flex-1 justify-center whitespace-nowrap shadow-lg shadow-[var(--violet-light)]/20"
+                                  >
+                                    <ExternalLink size={18} />
+                                    Live Demo
+                                  </MagneticButton>
+                                )}
+                              </div>
                             </div>
-                          </div>
                           </div>
                         </GlowCard>
                       </TiltCard>
