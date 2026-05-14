@@ -32,7 +32,7 @@ export const projects: Project[] = [
     image: "/projects/Tourweave.png", 
     tech: ["Next.js", "Supabase", "TailwindCSS", "AI/NLP", "PostgreSQL"],
     githubUrl: "https://github.com/AshwaniArya2005/tourweave/tree/master",
-    liveUrl: "https://tourweave.vercel.app",
+    liveUrl: "https://tourweave-vy17.vercel.app/",
     status: "completed",
     featured: true,
     category: ["Web", "AI/ML"],
