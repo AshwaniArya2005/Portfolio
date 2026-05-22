@@ -159,7 +159,7 @@ export function Contact() {
                     className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
                     style={{ background: color }}
                   />
-                  <Icon size={20} className="relative z-10 transition-colors duration-300 group-hover:text-white" style={{ color: "var(--text-secondary)" }} />
+                  <Icon size={20} className="relative z-10 transition-colors duration-300 group-hover:text-[var(--text-primary)]" style={{ color: "var(--text-secondary)" }} />
                 </motion.a>
               ))}
             </div>

@@ -95,7 +95,7 @@ export function Projects() {
 
                               {/* Overlay on hover */}
                               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 z-15 flex items-center justify-center backdrop-blur-[2px]">
-                                <span className="text-white text-sm font-semibold px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                <span className="text-[var(--text-primary)] text-sm font-semibold px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                                   View Project Details
                                 </span>
                               </div>
@@ -191,7 +191,7 @@ export function Projects() {
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-6 lg:-left-8 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
               <button
                 onClick={scrollPrev}
-                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-white backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
+                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={24} />
@@ -200,7 +200,7 @@ export function Projects() {
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -right-6 lg:-right-8 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
               <button
                 onClick={scrollNext}
-                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-white backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
+                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
                 aria-label="Next slide"
               >
                 <ChevronRight size={24} />
@@ -315,7 +315,7 @@ export function Projects() {
               {/* Close button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 z-[110] p-2 rounded-full bg-black/20 text-white/50 hover:text-white transition-colors backdrop-blur-md"
+                className="absolute top-4 right-4 z-[110] p-2 rounded-full bg-black/20 text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] transition-colors backdrop-blur-md"
               >
                 <Code className="rotate-45" size={20} />
               </button>

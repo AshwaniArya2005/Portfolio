@@ -74,7 +74,7 @@ export function Certifications() {
                     {/* Header */}
                     <div className="flex items-start gap-4 mb-4 min-h-[3rem]">
                       <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-white/5 border border-white/10"
+                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden bg-black/5 dark:bg-white/5 border border-[var(--border)]"
                       >
                         <IssuerLogo cert={cert} />
                       </div>
@@ -121,9 +121,9 @@ export function Certifications() {
                               key={skill}
                               className="px-2 py-0.5 rounded text-[10px] font-medium"
                               style={{
-                                background: "rgba(255,255,255,0.03)",
+                                background: "var(--surface-2)",
                                 color: "var(--text-secondary)",
-                                border: "1px solid rgba(255,255,255,0.08)",
+                                border: "1px solid var(--border)",
                                 fontFamily: "var(--font-mono)",
                               }}
                             >
@@ -148,11 +148,11 @@ export function Certifications() {
                         href={encodedUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group/btn relative flex items-center justify-center gap-3 w-full py-3.5 px-6 rounded-xl font-black text-[10px] tracking-[0.2em] uppercase transition-all duration-500 overflow-hidden active:scale-[0.98]"
+                        className="group/btn relative flex items-center justify-center gap-3 w-full py-3.5 px-6 rounded-xl font-black text-[10px] tracking-[0.2em] uppercase transition-all duration-500 overflow-hidden active:scale-[0.98] hover:text-white"
                         style={{
-                          background: "rgba(255,255,255,0.03)",
-                          color: "#fff",
-                          border: "1px solid rgba(255,255,255,0.08)"
+                          background: "var(--surface-2)",
+                          color: "var(--text-primary)",
+                          border: "1px solid var(--border)"
                         }}
                       >
                         {/* Hover Gradient Overlay */}
