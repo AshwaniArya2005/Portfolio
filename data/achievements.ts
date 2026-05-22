@@ -35,7 +35,7 @@ export const achievements: Achievement[] = [
   {
     id: "cgpa",
     value: 8,
-    suffix: ".9 8",
+    suffix: ".98",
     label: "CGPA",
     description: "VIT Bhopal University (CS Major)",
     icon: "Trophy",
