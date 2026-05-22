@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 interface Particle {
   x: number;
@@ -31,6 +32,9 @@ export function ParticleField({
   className = "",
   interactive = true,
 }: ParticleFieldProps) {
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
+  
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: -9999, y: -9999 });
@@ -89,8 +93,9 @@ export function ParticleField({
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        const currentAlpha = Math.min(isLight ? p.alpha * 2 : p.alpha, 1);
         ctx.fillStyle =
-          p.color + Math.round(p.alpha * 255).toString(16).padStart(2, "0");
+          p.color + Math.round(currentAlpha * 255).toString(16).padStart(2, "0");
         ctx.fill();
       });
 
@@ -103,9 +108,8 @@ export function ParticleField({
 
           if (dist < maxDistance) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(124, 58, 237, ${
-              (1 - dist / maxDistance) * 0.15
-            })`;
+            const lineAlpha = (1 - dist / maxDistance) * (isLight ? 0.4 : 0.15);
+            ctx.strokeStyle = `rgba(124, 58, 237, ${lineAlpha})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -147,7 +151,7 @@ export function ParticleField({
         window.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, [count, colors, maxDistance, speed, interactive]);
+  }, [count, colors, maxDistance, speed, interactive, isLight]);
 
   return (
     <canvas
