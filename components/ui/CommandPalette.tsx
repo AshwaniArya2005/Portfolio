@@ -142,7 +142,7 @@ export function CommandPalette() {
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--border-strong)",
-                boxShadow: "0 0 0 1px var(--border), 0 32px 80px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.15)",
+                boxShadow: "0 0 0 1px var(--border), 0 32px 80px rgba(0,0,0,0.5), 0 0 40px var(--gold-glow)",
               }}
             >
               {/* Search input */}
@@ -189,13 +189,16 @@ export function CommandPalette() {
                     <button
                       key={cmd.id}
                       onClick={cmd.action}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-violet-500/10"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+                      style={{ "--hover-bg": "var(--gold-glow)" } as React.CSSProperties}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "var(--gold-glow)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "")}
                     >
                       <span
                         className="p-1.5 rounded-lg"
                         style={{
-                          color: "var(--violet-light)",
-                          background: "rgba(124,58,237,0.1)",
+                          color: "var(--gold-light)",
+                          background: "var(--gold-glow)",
                         }}
                       >
                         {cmd.icon}

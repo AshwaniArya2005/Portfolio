@@ -61,7 +61,7 @@ export function Resume() {
           {/* Glow rim */}
           <div
             className="absolute inset-0 rounded-2xl pointer-events-none z-10"
-            style={{ boxShadow: "inset 0 0 0 1px rgba(124,58,237,0.2)" }}
+            style={{ boxShadow: "inset 0 0 0 1px var(--border-strong)" }}
           />
 
           {/* Header bar (fake browser chrome) */}
@@ -109,7 +109,7 @@ export function Resume() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline"
-                  style={{ color: "var(--violet-light)" }}
+                  style={{ color: "var(--gold-light)" }}
                 >
                   Download directly
                 </a>

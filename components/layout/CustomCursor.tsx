@@ -80,7 +80,7 @@ export function CustomCursor() {
       >
         <div
           className="w-3 h-3 rounded-full"
-          style={{ background: "var(--violet-light)", boxShadow: "0 0 10px var(--violet-light)" }}
+          style={{ background: "var(--gold-light)", boxShadow: "0 0 10px var(--gold-light)" }}
         />
       </motion.div>
 
@@ -92,13 +92,13 @@ export function CustomCursor() {
         animate={{
           scale: isPointer ? 1.5 : isClicking ? 0.8 : 1,
           opacity: isVisible ? 1 : 0,
-          borderColor: isPointer ? "var(--cyan)" : "var(--violet-light)",
+          borderColor: isPointer ? "var(--copper)" : "var(--gold-light)",
         }}
         transition={{ duration: 0.2 }}
       >
         <div
-          className="w-8 h-8 rounded-full border-2 border-violet-400"
-          style={{ borderColor: "var(--violet-light)" }}
+          className="w-8 h-8 rounded-full border-2"
+          style={{ borderColor: "var(--gold-light)" }}
         />
       </motion.div>
 
@@ -117,8 +117,8 @@ export function CustomCursor() {
           className="w-64 h-64 rounded-full"
           style={{
             background: isPointer
-              ? "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)",
+              ? "radial-gradient(circle, var(--copper-glow) 0%, transparent 70%)"
+              : "radial-gradient(circle, var(--gold-glow) 0%, transparent 70%)",
           }}
         />
       </motion.div>

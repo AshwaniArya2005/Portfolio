@@ -23,7 +23,7 @@ export function Skills() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 100%, rgba(124,58,237,0.05) 0%, transparent 100%)",
+            "radial-gradient(ellipse 60% 40% at 50% 100%, var(--gold-glow) 0%, transparent 100%)",
         }}
       />
 
@@ -37,10 +37,10 @@ export function Skills() {
             whileTap={{ scale: 0.95 }}
             className="relative px-5 py-2 rounded-full text-sm font-medium overflow-hidden transition-colors duration-200"
             style={{
-              background: activeCategory === cat ? "rgba(124,58,237,0.15)" : "var(--surface)",
-              color: activeCategory === cat ? "var(--violet-light)" : "var(--text-secondary)",
+              background: activeCategory === cat ? "var(--gold-glow)" : "var(--surface)",
+              color: activeCategory === cat ? "var(--gold-light)" : "var(--text-secondary)",
               border: activeCategory === cat
-                ? "1px solid rgba(124,58,237,0.4)"
+                ? "1px solid var(--border-strong)"
                 : "1px solid var(--border)",
             }}
           >
@@ -48,7 +48,7 @@ export function Skills() {
               <motion.div
                 layoutId="skill-tab-bg"
                 className="absolute inset-0 rounded-full"
-                style={{ background: "rgba(124,58,237,0.08)" }}
+                style={{ background: "var(--gold-glow)" }}
                 transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
               />
             )}
@@ -114,7 +114,7 @@ export function Skills() {
                     style={{
                       background: skill.color
                         ? `linear-gradient(90deg, ${skill.color}80, ${skill.color})`
-                        : "linear-gradient(90deg, var(--violet), var(--cyan))",
+                        : "var(--gradient-brand)",
                     }}
                   />
                 </div>
@@ -151,7 +151,7 @@ export function Skills() {
             <div key={cat} className="flex items-center gap-2">
               <div
                 className="w-2 h-2 rounded-full"
-                style={{ background: "linear-gradient(135deg, var(--violet), var(--cyan))" }}
+                style={{ background: "var(--gradient-brand)" }}
               />
               <span className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                 {cat}{" "}

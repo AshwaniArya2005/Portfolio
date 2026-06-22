@@ -26,7 +26,7 @@ function IssuerLogo({ cert, size = 22 }: { cert: Certification; size?: number })
         <Award
           size={size}
           className="relative z-10"
-          style={{ color: "var(--violet-light)" }}
+          style={{ color: "var(--gold-light)" }}
         />
       )}
     </div>
@@ -68,7 +68,7 @@ export function Certifications() {
               >
                 <GlowCard
                   className="p-6 h-full flex flex-col group transition-all duration-300 hover:-translate-y-1"
-                  glowColor="rgba(124,58,237,0.25)"
+                  glowColor="var(--gold-glow)"
                 >
                   <div className="flex-1">
                     {/* Header */}
@@ -85,7 +85,7 @@ export function Certifications() {
                         >
                           {cert.title}
                         </h3>
-                        <p className="text-xs" style={{ color: "var(--violet-light)" }}>
+                        <p className="text-xs" style={{ color: "var(--gold-light)" }}>
                           {cert.issuer}
                         </p>
                       </div>
@@ -103,9 +103,9 @@ export function Certifications() {
                       <span
                         className="px-2 py-0.5 rounded-full text-xs font-medium"
                         style={{
-                          background: "rgba(6,182,212,0.1)",
-                          color: "var(--cyan)",
-                          border: "1px solid rgba(6,182,212,0.2)",
+                          background: "var(--gold-glow)",
+                          color: "var(--gold-light)",
+                          border: "1px solid var(--border-strong)",
                         }}
                       >
                         {cert.category}
@@ -158,12 +158,12 @@ export function Certifications() {
                         {/* Hover Gradient Overlay */}
                         <div 
                           className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 z-0"
-                          style={{ background: "linear-gradient(135deg, var(--violet) 0%, var(--cyan) 100%)" }}
+                          style={{ background: "var(--gradient-brand)" }}
                         />
                         
                         {/* Hover Glow Effect */}
                         <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-40 blur-xl transition-opacity duration-500 z-0"
-                          style={{ background: "linear-gradient(135deg, var(--violet) 0%, var(--cyan) 100%)" }}
+                          style={{ background: "var(--gradient-brand)" }}
                         />
 
                         <span className="relative z-10 flex items-center gap-2.5">

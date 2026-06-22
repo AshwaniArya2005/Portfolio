@@ -15,7 +15,7 @@ interface GlowCardProps {
 export function GlowCard({
   children,
   className,
-  glowColor = "rgba(124, 58, 237, 0.3)",
+  glowColor = "rgba(201, 146, 42, 0.3)",
   intensity = 1,
   disableHoverAnim = false,
 }: GlowCardProps) {

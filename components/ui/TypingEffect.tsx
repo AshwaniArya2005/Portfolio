@@ -64,7 +64,7 @@ export function TypingEffect({
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
         className={`ml-0.5 inline-block w-0.5 h-[1em] rounded-full ${cursorClassName}`}
-        style={{ background: "var(--violet-light)" }}
+        style={{ background: "var(--gold-light)" }}
       />
     </span>
   );

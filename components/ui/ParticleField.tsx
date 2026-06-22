@@ -22,7 +22,7 @@ interface ParticleFieldProps {
   interactive?: boolean;
 }
 
-const defaultColors = ["#7c3aed", "#a855f7", "#06b6d4", "#3b82f6"];
+const defaultColors = ["#c9922a", "#e8b84b", "#c87c5e", "#d4a017"];
 
 export function ParticleField({
   count = 60,
@@ -109,7 +109,7 @@ export function ParticleField({
           if (dist < maxDistance) {
             ctx.beginPath();
             const lineAlpha = (1 - dist / maxDistance) * (isLight ? 0.4 : 0.15);
-            ctx.strokeStyle = `rgba(124, 58, 237, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(201, 146, 42, ${lineAlpha})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

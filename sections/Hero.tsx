@@ -59,7 +59,7 @@ export function Hero() {
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
-            background: `radial-gradient(600px circle at ${spotlightPos.x}% ${spotlightPos.y}%, rgba(124,58,237,0.07) 0%, transparent 50%)`,
+            background: `radial-gradient(600px circle at ${spotlightPos.x}% ${spotlightPos.y}%, var(--gold-glow) 0%, transparent 50%)`,
             transition: "background 0.6s ease-out",
           }}
         />
@@ -84,9 +84,9 @@ export function Hero() {
               <span
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
                 style={{
-                  background: "rgba(124, 58, 237, 0.1)",
-                  color: "var(--violet-light)",
-                  border: "1px solid rgba(124, 58, 237, 0.25)",
+                  background: "var(--gold-glow)",
+                  color: "var(--gold-light)",
+                  border: "1px solid var(--border-strong)",
                   fontFamily: "var(--font-mono)",
                 }}
               >

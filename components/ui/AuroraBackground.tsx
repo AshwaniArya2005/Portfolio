@@ -17,7 +17,7 @@ export function AuroraBackground({
     <div className={cn("relative overflow-hidden", className)}>
       {/* Aurora blobs */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        {/* Primary violet blob */}
+        {/* Primary gold blob */}
         <div
           className="aurora-blob absolute"
           style={{
@@ -27,11 +27,11 @@ export function AuroraBackground({
             maxHeight: "800px",
             top: "-20%",
             left: "-10%",
-            background: "radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--gold-glow) 0%, transparent 70%)",
             animationDelay: "0s",
           }}
         />
-        {/* Cyan blob */}
+        {/* Copper blob */}
         <div
           className="aurora-blob absolute"
           style={{
@@ -41,11 +41,11 @@ export function AuroraBackground({
             maxHeight: "700px",
             top: "30%",
             right: "-15%",
-            background: "radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--copper-glow) 0%, transparent 70%)",
             animationDelay: "-4s",
           }}
         />
-        {/* Pink accent blob */}
+        {/* Accent blob */}
         <div
           className="aurora-blob absolute"
           style={{
@@ -55,11 +55,12 @@ export function AuroraBackground({
             maxHeight: "500px",
             bottom: "10%",
             left: "30%",
-            background: "radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--gold-glow) 0%, transparent 70%)",
             animationDelay: "-2s",
+            opacity: 0.6,
           }}
         />
-        {/* Small violet accent */}
+        {/* Small accent */}
         <div
           className="aurora-blob absolute"
           style={{
@@ -69,7 +70,7 @@ export function AuroraBackground({
             maxHeight: "400px",
             bottom: "-5%",
             left: "10%",
-            background: "radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--copper-glow) 0%, transparent 70%)",
             animationDelay: "-6s",
           }}
         />
@@ -81,7 +82,7 @@ export function AuroraBackground({
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,58,237,0.08) 0%, transparent 100%)",
+              "radial-gradient(ellipse 80% 50% at 50% 0%, var(--gold-glow) 0%, transparent 100%)",
           }}
         />
       )}

@@ -61,15 +61,15 @@ export function SectionWrapper({
                 <span
                   className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
                   style={{
-                    background: "rgba(124, 58, 237, 0.1)",
-                    color: "var(--violet-light)",
-                    border: "1px solid rgba(124, 58, 237, 0.2)",
+                    background: "var(--gold-glow)",
+                    color: "var(--gold-light)",
+                    border: "1px solid var(--border-strong)",
                     fontFamily: "var(--font-mono)",
                   }}
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: "var(--violet-light)" }}
+                    style={{ background: "var(--gold-light)" }}
                   />
                   {label}
                 </span>
@@ -109,7 +109,7 @@ export function SectionWrapper({
               <div
                 className="h-1 w-16 rounded-full"
                 style={{
-                  background: "linear-gradient(90deg, var(--violet), var(--cyan))",
+                  background: "var(--gradient-brand)",
                 }}
               />
             </motion.div>

@@ -95,15 +95,15 @@ export function About() {
               style={{ color: "var(--text-secondary)" }}
             >
               I&apos;m a passionate Computer Science student with a deep love for{" "}
-              <span className="font-semibold" style={{ color: "var(--violet-light)" }}>
+              <span className="font-semibold" style={{ color: "var(--gold-light)" }}>
                 competitive programming
               </span>
               ,{" "}
-              <span className="font-semibold" style={{ color: "var(--cyan)" }}>
+              <span className="font-semibold" style={{ color: "var(--copper)" }}>
                 machine learning research
               </span>
               , and{" "}
-              <span className="font-semibold" style={{ color: "#ec4899" }}>
+              <span className="font-semibold" style={{ color: "var(--text-accent)" }}>
                 full-stack development
               </span>
               . I believe great software lives at the intersection of elegant
@@ -125,9 +125,9 @@ export function About() {
                     key={tag}
                     className="px-3 py-1 rounded-full text-xs font-medium"
                     style={{
-                      background: "rgba(124, 58, 237, 0.08)",
-                      color: "var(--violet-light)",
-                      border: "1px solid rgba(124, 58, 237, 0.15)",
+                      background: "var(--gold-glow)",
+                      color: "var(--gold-light)",
+                      border: "1px solid var(--border-strong)",
                       fontFamily: "var(--font-mono)",
                     }}
                   >
@@ -156,7 +156,7 @@ export function About() {
                     className="w-8 h-8 rounded-lg flex items-center justify-center mb-3"
                     style={{
                       background: "var(--surface)",
-                      color: "var(--violet-light)",
+                      color: "var(--gold-light)",
                     }}
                   >
                     <Icon size={16} />
@@ -202,7 +202,7 @@ export function About() {
               className="text-sm font-semibold mb-4 flex items-center gap-2"
               style={{ color: "var(--text-primary)", fontFamily: "var(--font-mono)" }}
             >
-              <span className="text-violet-400">$</span> Currently exploring
+              <span style={{ color: "var(--gold-light)" }}>$</span> Currently exploring
             </h3>
             <div className="space-y-3">
               {[
@@ -228,7 +228,7 @@ export function About() {
                       viewport={{ once: true }}
                       transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
                       className="h-full rounded-full"
-                      style={{ background: "linear-gradient(90deg, var(--violet), var(--cyan))" }}
+                      style={{ background: "var(--gradient-brand)" }}
                     />
                   </div>
                 </div>

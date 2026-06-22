@@ -32,14 +32,14 @@ const statusConfig: Record<StatusType, { label: string; color: string; bg: strin
   },
   featured: {
     label: "Featured",
-    color: "#a855f7",
-    bg: "rgba(168, 85, 247, 0.1)",
+    color: "#c9922a",
+    bg: "rgba(201, 146, 42, 0.12)",
     pulse: false,
   },
   new: {
     label: "New",
-    color: "#06b6d4",
-    bg: "rgba(6, 182, 212, 0.1)",
+    color: "#c87c5e",
+    bg: "rgba(200, 124, 94, 0.12)",
     pulse: true,
   },
   live: {

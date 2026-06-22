@@ -59,7 +59,7 @@ export function Projects() {
                             <div
                               className="w-full md:w-[45%] lg:w-[50%] relative overflow-hidden flex-shrink-0 h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/5"
                               style={{
-                                background: `linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(6,182,212,0.2) 100%)`,
+                                background: `linear-gradient(135deg, var(--gold-glow) 0%, var(--copper-glow) 100%)`,
                               }}
                             >
                               {/* Grid pattern (placeholder) */}
@@ -67,7 +67,7 @@ export function Projects() {
                                 className="absolute inset-0 opacity-30"
                                 style={{
                                   backgroundImage:
-                                    "linear-gradient(rgba(124,58,237,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.3) 1px, transparent 1px)",
+                                    "linear-gradient(var(--border-strong) 1px, transparent 1px), linear-gradient(90deg, var(--border-strong) 1px, transparent 1px)",
                                   backgroundSize: "30px 30px",
                                 }}
                               />
@@ -114,10 +114,10 @@ export function Projects() {
                             {/* Content */}
                             <div className="w-full md:w-[55%] lg:w-[50%] p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col flex-1 justify-center relative bg-[var(--surface)]/50">
                               {/* Subtle background glow */}
-                              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--violet-light)]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--gold-light)]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
                               <h3
-                                className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-[var(--violet-light)] transition-colors"
+                                className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-[var(--gold-light)] transition-colors"
                                 style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
                               >
                                 {project.title}
@@ -136,9 +136,9 @@ export function Projects() {
                                     key={tech}
                                     className="px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide"
                                     style={{
-                                      background: "rgba(124,58,237,0.08)",
-                                      color: "var(--violet-light)",
-                                      border: "1px solid rgba(124,58,237,0.15)",
+                                      background: "var(--gold-glow)",
+                                      color: "var(--gold-light)",
+                                      border: "1px solid var(--border-strong)",
                                       fontFamily: "var(--font-mono)",
                                     }}
                                   >
@@ -170,7 +170,7 @@ export function Projects() {
                                     target="_blank"
                                     variant="primary"
                                     size="md"
-                                    className="gap-2 flex-1 justify-center whitespace-nowrap shadow-lg shadow-[var(--violet-light)]/20"
+                                    className="gap-2 flex-1 justify-center whitespace-nowrap shadow-lg shadow-[var(--gold-light)]/20"
                                   >
                                     <ExternalLink size={18} />
                                     Live Demo
@@ -191,7 +191,7 @@ export function Projects() {
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-6 lg:-left-8 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
               <button
                 onClick={scrollPrev}
-                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
+                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--gold)]/50 hover:bg-[var(--surface)] hover:text-[var(--gold-light)] hover:scale-110 transition-all shadow-xl"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={24} />
@@ -200,7 +200,7 @@ export function Projects() {
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -right-6 lg:-right-8 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
               <button
                 onClick={scrollNext}
-                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--violet)]/50 hover:bg-[var(--surface)] hover:text-[var(--violet-light)] hover:scale-110 transition-all shadow-xl"
+                className="p-3.5 rounded-full bg-[var(--surface-2)]/80 text-[var(--text-primary)] backdrop-blur-md border border-white/10 hover:border-[var(--gold)]/50 hover:bg-[var(--surface)] hover:text-[var(--gold-light)] hover:scale-110 transition-all shadow-xl"
                 aria-label="Next slide"
               >
                 <ChevronRight size={24} />
@@ -230,7 +230,7 @@ export function Projects() {
                   <GlowCard className="p-6 h-full flex flex-col">
                     <div className="flex items-start justify-between mb-3">
                       <h3
-                        className="text-sm font-bold group-hover:text-[var(--violet-light)] transition-colors"
+                        className="text-sm font-bold group-hover:text-[var(--gold-light)] transition-colors"
                         style={{ fontFamily: "var(--font-heading)", color: "var(--text-primary)" }}
                       >
                         {project.title}
@@ -275,8 +275,8 @@ export function Projects() {
                       )}
                       {project.liveUrl && project.liveUrl !== "#" && (
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md transition-all hover:bg-[var(--cyan)]/10 border"
-                          style={{ color: "var(--cyan)", borderColor: "rgba(6,182,212,0.2)" }}>
+                          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md transition-all hover:bg-[var(--gold)]/10 border"
+                          style={{ color: "var(--gold-light)", borderColor: "var(--border-strong)" }}>
                           <ExternalLink size={14} /> Demo
                         </a>
                       )}
@@ -356,10 +356,10 @@ export function Projects() {
                   <div className="px-6 sm:px-8 pt-10 pb-6 relative overflow-hidden">
                     <div
                       className="absolute top-0 left-0 right-0 h-1"
-                      style={{ background: "linear-gradient(90deg, var(--violet), var(--cyan))" }}
+                      style={{ background: "var(--gradient-brand)" }}
                     />
                     <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full opacity-10 blur-3xl pointer-events-none"
-                      style={{ background: "var(--violet)" }} />
+                      style={{ background: "var(--gold)" }} />
                     <div className="flex gap-2 mb-4">
                       <Badge status={selectedProject.status} />
                     </div>
@@ -393,9 +393,9 @@ export function Projects() {
                             key={tech}
                             className="px-3 py-1 rounded-full text-xs font-medium"
                             style={{
-                              background: "rgba(124,58,237,0.1)",
-                              color: "var(--violet-light)",
-                              border: "1px solid rgba(124,58,237,0.2)",
+                              background: "var(--gold-glow)",
+                              color: "var(--gold-light)",
+                              border: "1px solid var(--border-strong)",
                               fontFamily: "var(--font-mono)",
                             }}
                           >
@@ -422,7 +422,7 @@ export function Projects() {
                             href={selectedProject.liveUrl}
                             target="_blank"
                             variant="primary"
-                            className="w-full gap-2 justify-center shadow-lg shadow-[var(--violet-light)]/20"
+                            className="w-full gap-2 justify-center shadow-lg shadow-[var(--gold-light)]/20"
                           >
                             <ExternalLink size={18} />
                             Launch Live Demo

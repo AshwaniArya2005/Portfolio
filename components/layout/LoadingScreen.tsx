@@ -37,11 +37,11 @@ export function LoadingScreen() {
           <div className="absolute inset-0 overflow-hidden">
             <div
               className="aurora-blob w-96 h-96 -top-20 -left-20 opacity-30"
-              style={{ background: "var(--violet)" }}
+              style={{ background: "var(--gold)" }}
             />
             <div
               className="aurora-blob w-80 h-80 bottom-0 right-0 opacity-20"
-              style={{ background: "var(--cyan)", animationDelay: "-3s" }}
+              style={{ background: "var(--copper)", animationDelay: "-3s" }}
             />
           </div>
 
@@ -55,8 +55,8 @@ export function LoadingScreen() {
             <div
               className="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white"
               style={{
-                background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
-                boxShadow: "0 0 40px rgba(124, 58, 237, 0.5)",
+                background: "var(--gradient-brand)",
+                boxShadow: "0 0 40px var(--gold-glow)",
                 fontFamily: "var(--font-heading)",
               }}
             >
@@ -84,7 +84,7 @@ export function LoadingScreen() {
               className="h-full rounded-full"
               style={{
                 width: `${Math.min(progress, 100)}%`,
-                background: "linear-gradient(90deg, #7c3aed, #06b6d4)",
+                background: "var(--gradient-brand)",
                 transition: "width 0.1s ease",
               }}
             />

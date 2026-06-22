@@ -57,7 +57,7 @@ export function MagneticButton({
 
   const variantStyles = {
     primary: {
-      background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+      background: "var(--gradient-brand)",
       color: "white",
       border: "none",
     },
@@ -73,8 +73,8 @@ export function MagneticButton({
     },
     outline: {
       background: "transparent",
-      color: "var(--violet-light)",
-      border: "1px solid var(--violet)",
+      color: "var(--gold-light)",
+      border: "1px solid var(--gold)",
     },
   };
 

@@ -67,7 +67,7 @@ export function Navbar() {
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm tracking-wide font-bold"
                 style={{
-                  background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+                  background: "var(--gradient-brand)",
                 }}
               >
                 {personal.initials}
@@ -89,11 +89,11 @@ export function Navbar() {
                   className={cn(
                     "relative px-3 py-1.5 text-sm font-medium rounded-lg transition-colors",
                     activeSection === item.id
-                      ? "text-violet-400"
-                      : "hover:text-violet-400"
+                      ? "text-[var(--gold-light)]"
+                      : "hover:text-[var(--gold-light)]"
                   )}
                   style={{
-                    color: activeSection === item.id ? "var(--violet-light)" : "var(--text-secondary)",
+                    color: activeSection === item.id ? "var(--gold-light)" : "var(--text-secondary)",
                   }}
                 >
                   {item.label}
@@ -101,7 +101,7 @@ export function Navbar() {
                     <motion.div
                       layoutId="nav-indicator"
                       className="absolute inset-0 rounded-lg"
-                      style={{ background: "rgba(124, 58, 237, 0.1)" }}
+                      style={{ background: "var(--gold-glow)" }}
                       transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
                     />
                   )}
@@ -190,8 +190,8 @@ export function Navbar() {
                   onClick={() => scrollTo(item.id)}
                   className="text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors"
                   style={{
-                    background: activeSection === item.id ? "rgba(124, 58, 237, 0.1)" : "transparent",
-                    color: activeSection === item.id ? "var(--violet-light)" : "var(--text-secondary)",
+                    background: activeSection === item.id ? "var(--gold-glow)" : "transparent",
+                    color: activeSection === item.id ? "var(--gold-light)" : "var(--text-secondary)",
                   }}
                 >
                   {item.label}

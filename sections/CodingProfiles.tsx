@@ -188,7 +188,7 @@ export function CodingProfiles() {
                   <StatWidget icon={<Target size={14} />} label="Easy" value={lcStats.easySolved} color="#10b981" subValue={`${Math.round((lcStats.easySolved / lcStats.totalSolved) * 100)}%`} />
                   <StatWidget icon={<Zap size={14} />} label="Medium" value={lcStats.mediumSolved} color="#f59e0b" subValue={`${Math.round((lcStats.mediumSolved / lcStats.totalSolved) * 100)}%`} />
                   <StatWidget icon={<Award size={14} />} label="Hard" value={lcStats.hardSolved} color="#ef4444" subValue={`${Math.round((lcStats.hardSolved / lcStats.totalSolved) * 100)}%`} />
-                  <StatWidget icon={<TrendingUp size={14} />} label="Global Rank" value={`#${lcStats.ranking.toLocaleString()}`} color="var(--violet-light)" />
+                  <StatWidget icon={<TrendingUp size={14} />} label="Global Rank" value={`#${lcStats.ranking.toLocaleString()}`} color="var(--gold-light)" />
                 </div>
 
                 {/* Contest Widget */}
@@ -227,8 +227,8 @@ export function CodingProfiles() {
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-bold">Day Streak</div>
                   </div>
                   <div className="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--border)] flex flex-col items-center text-center">
-                    <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2">
-                      <Calendar size={16} className="text-cyan-500" />
+                    <div className="w-8 h-8 rounded-full bg-[var(--gold)]/10 flex items-center justify-center mb-2">
+                      <Calendar size={16} style={{ color: "var(--gold)" }} />
                     </div>
                     <div className="text-xl font-bold text-[var(--text-primary)] font-heading">{lcStats.totalActiveDays}</div>
                     <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-bold">Active Days</div>
@@ -292,7 +292,7 @@ export function CodingProfiles() {
                   <div className="p-4 rounded-3xl bg-black/5 dark:bg-white/5 border border-[var(--border)]">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest">Rating History</span>
-                      <TrendingUp size={12} className="text-cyan-500" />
+                      <TrendingUp size={12} style={{ color: "var(--gold-light)" }} />
                     </div>
                     <div className="h-40 w-full">
                       <ResponsiveContainer width="100%" height="100%">
@@ -325,8 +325,8 @@ export function CodingProfiles() {
 
                 {/* CP Stats */}
                 <div className="grid grid-cols-2 gap-3">
-                  <StatWidget icon={<BookOpen size={14} />} label="Problems" value={cfStats.problemsSolved} color="var(--violet-light)" subValue="Solved" />
-                  <StatWidget icon={<Users size={14} />} label="Friends" value={cfStats.user.friendOfCount} color="var(--cyan)" subValue="Following" />
+                  <StatWidget icon={<BookOpen size={14} />} label="Problems" value={cfStats.problemsSolved} color="var(--gold-light)" subValue="Solved" />
+                  <StatWidget icon={<Users size={14} />} label="Friends" value={cfStats.user.friendOfCount} color="var(--gold)" subValue="Following" />
                 </div>
 
                 {/* Recent Contests */}
@@ -364,7 +364,7 @@ export function CodingProfiles() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="h-full"
         >
-          <GlowCard className="p-6 h-full flex flex-col" glowColor="rgba(168,85,247,0.15)">
+          <GlowCard className="p-6 h-full flex flex-col" glowColor="var(--gold-glow)">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-black/5 dark:bg-white/5 border border-[var(--border-strong)]">
@@ -402,8 +402,8 @@ export function CodingProfiles() {
                         fontSize={10}
                         colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
                         theme={{
-    dark: ['rgba(255,255,255,0.05)', 'rgba(124,58,237,0.4)', 'rgba(124,58,237,0.6)', 'rgba(124,58,237,0.8)', '#a855f7'],
-    light: ['rgba(0,0,0,0.05)', 'rgba(124,58,237,0.3)', 'rgba(124,58,237,0.5)', 'rgba(124,58,237,0.7)', '#7c3aed'],
+    dark: ['rgba(255,255,255,0.05)', 'rgba(192,57,43,0.4)', 'rgba(192,57,43,0.6)', 'rgba(192,57,43,0.8)', '#e74c3c'],
+    light: ['rgba(0,0,0,0.05)', 'rgba(201,146,42,0.3)', 'rgba(201,146,42,0.5)', 'rgba(201,146,42,0.7)', '#c9922a'],
   }}
                       />
                     </div>
@@ -413,14 +413,14 @@ export function CodingProfiles() {
                 {/* Primary Stats */}
                 <div className="grid grid-cols-2 gap-3">
                   <StatWidget icon={<Star size={14} />} label="Stars" value={ghStats?.totalStars ?? 0} color="#f59e0b" subValue="Earned" />
-                  <StatWidget icon={<GitFork size={14} />} label="Repos" value={ghUser.public_repos} color="var(--cyan)" subValue="Public" />
+                  <StatWidget icon={<GitFork size={14} />} label="Repos" value={ghUser.public_repos} color="var(--gold)" subValue="Public" />
                 </div>
 
                 {/* Language Distribution */}
                 <div className="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--border)]">
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest">Stack Distribution</span>
-                    <PieIcon size={12} className="text-violet-500" />
+                    <PieIcon size={12} style={{ color: "var(--gold)" }} />
                   </div>
                   <div className="flex items-center gap-6">
                     <div className="w-20 h-20">
@@ -436,7 +436,7 @@ export function CodingProfiles() {
                             stroke="none"
                           >
                             {ghLangData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={`rgba(124,58,237, ${1 - index * 0.15})`} />
+                              <Cell key={`cell-${index}`} fill={`rgba(201,146,42, ${1 - index * 0.15})`} />
                             ))}
                           </Pie>
                         </PieChart>
@@ -446,7 +446,7 @@ export function CodingProfiles() {
                       {ghLangData.map((lang, i) => (
                         <div key={lang.name} className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: `rgba(124,58,237, ${1 - i * 0.15})` }} />
+                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: `rgba(201,146,42, ${1 - i * 0.15})` }} />
                             <span className="text-[10px] font-bold text-[var(--text-primary)]/70 uppercase">{lang.name}</span>
                           </div>
                           <span className="text-[10px] font-mono text-[var(--text-muted)]">{lang.value}</span>
@@ -466,7 +466,7 @@ export function CodingProfiles() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--border)]">
-                    <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-500"><GitFork size={14} /></div>
+                    <div className="p-2 rounded-lg" style={{ background: "var(--gold-glow)", color: "var(--gold)" }}><GitFork size={14} /></div>
                     <div>
                       <div className="text-sm font-bold text-[var(--text-primary)] leading-none">{ghUser.following}</div>
                       <div className="text-[9px] text-[var(--text-muted)] uppercase font-medium">Following</div>

@@ -47,7 +47,7 @@ export function Contact() {
     color: "var(--text-primary)",
     fontFamily: "var(--font-body)",
   };
-  const inputFocusStyle = { borderColor: "rgba(124,58,237,0.5)", boxShadow: "0 0 0 3px rgba(124,58,237,0.1)" };
+  const inputFocusStyle = { borderColor: "var(--border-strong)", boxShadow: "0 0 0 3px var(--gold-glow)" };
 
   return (
     <SectionWrapper
@@ -85,8 +85,8 @@ export function Contact() {
             onClick={copyEmail}
           >
             <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: "rgba(124,58,237,0.1)" }}>
-              <Mail size={16} style={{ color: "var(--violet-light)" }} />
+              style={{ background: "var(--gold-glow)" }}>
+              <Mail size={16} style={{ color: "var(--gold-light)" }} />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs mb-0.5" style={{ color: "var(--text-muted)" }}>Email</p>
@@ -113,7 +113,7 @@ export function Contact() {
           {/* Location & Availability */}
           <div className="space-y-3">
             <div className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-              <MapPin size={15} style={{ color: "var(--violet-light)" }} />
+              <MapPin size={15} style={{ color: "var(--gold-light)" }} />
               {personal.location}
             </div>
             <div className="flex items-center gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
@@ -202,7 +202,7 @@ export function Contact() {
                   <button
                     onClick={() => setStatus("idle")}
                     className="text-sm underline mt-2"
-                    style={{ color: "var(--violet-light)" }}
+                    style={{ color: "var(--gold-light)" }}
                   >
                     Send another message
                   </button>
@@ -337,9 +337,9 @@ export function Contact() {
       >
         {/* Premium Divider Line */}
         <div className="w-full max-w-md h-px relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-50" />
           <motion.div 
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--gold-light)] to-transparent"
             animate={{ x: ["-100%", "100%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           />
@@ -359,7 +359,7 @@ export function Contact() {
           style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
         >
           © {new Date().getFullYear()} {personal.name} · Built with{" "}
-          <Heart size={10} fill="currentColor" className="text-violet-400" />
+          <Heart size={10} fill="currentColor" style={{ color: "var(--gold)" }} />
           {" "}using Next.js & Framer Motion
         </p>
       </motion.div>
