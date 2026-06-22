@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useSpring } from "framer-motion";
 
 export function CustomCursor() {
-  const cursorDot = useRef<HTMLDivElement>(null);
-  const cursorRing = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
   const [isText, setIsText] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
@@ -18,13 +17,11 @@ export function CustomCursor() {
   const ringY = useSpring(0, { stiffness: 200, damping: 30 });
 
   useEffect(() => {
-    // Check if touch device
+    // Detect touch devices — skip custom cursor on them
     if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
       setIsTouchDevice(true);
       return;
     }
-
-    setIsVisible(true);
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -32,12 +29,16 @@ export function CustomCursor() {
       ringX.set(e.clientX);
       ringY.set(e.clientY);
 
+      // Only show cursor after the first real mouse movement
+      setHasMoved(true);
+      setIsVisible(true);
+
       const target = e.target as Element;
       const isPointerEl =
         target.matches("a, button, [role=button], input, textarea, select, label, [tabindex]") ||
         !!target.closest("a, button, [role=button]");
-      const isTextEl = target.matches("p, h1, h2, h3, h4, h5, h6, span, li") &&
-        !isPointerEl;
+      const isTextEl =
+        target.matches("p, h1, h2, h3, h4, h5, h6, span, li") && !isPointerEl;
 
       setIsPointer(isPointerEl);
       setIsText(isTextEl);
@@ -61,15 +62,16 @@ export function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mouseX, mouseY, ringX, ringY]);
 
-  if (isTouchDevice) return null;
+  // Don't render on touch devices or until the mouse has moved at least once
+  if (isTouchDevice || !hasMoved) return null;
 
   return (
     <>
       {/* Cursor dot */}
       <motion.div
-        ref={cursorDot}
         className="fixed top-0 left-0 z-[9999] pointer-events-none"
         style={{ x: mouseX, y: mouseY, translateX: "-50%", translateY: "-50%" }}
         animate={{
@@ -86,7 +88,6 @@ export function CustomCursor() {
 
       {/* Cursor ring */}
       <motion.div
-        ref={cursorRing}
         className="fixed top-0 left-0 z-[9998] pointer-events-none"
         style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
         animate={{

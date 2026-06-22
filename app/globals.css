@@ -276,6 +276,25 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Hide native cursor on non-touch devices so the custom cursor shows */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: none !important;
+  }
+
+  /* Also suppress pointer cursor on interactive elements */
+  a,
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select,
+  label {
+    cursor: none !important;
+  }
+}
+
 body {
   background-color: var(--background);
   color: var(--text-primary);
