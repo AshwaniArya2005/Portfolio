@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Download, ArrowRight, Code, Mail, Code2, ChevronDown } from "lucide-react";
 import { AuroraBackground } from "@/components/ui/AuroraBackground";
@@ -73,13 +74,15 @@ export function Hero() {
           style={{ opacity, y }}
           className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 pb-16"
         >
-          <div className="max-w-4xl">
-{/* Name */}
+          <div className="flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-10 lg:gap-0">
+            {/* Left: Text Content */}
+            <div className="max-w-2xl flex-1 w-full">
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-5xl sm:text-7xl lg:text-8xl font-bold leading-none mb-4"
+              className="text-4xl sm:text-6xl lg:text-8xl font-bold leading-none mb-4 text-center sm:text-left"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               <span style={{ color: "var(--text-primary)" }}>Ashwani</span>
@@ -92,7 +95,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mb-6 h-12 flex items-center"
+              className="mb-6 h-12 flex items-center justify-center sm:justify-start"
             >
               <span
                 className="text-xl sm:text-2xl font-medium"
@@ -110,7 +113,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg max-w-2xl mb-10 leading-relaxed"
+              className="text-base sm:text-lg max-w-2xl mb-10 leading-relaxed text-center sm:text-left"
               style={{ color: "var(--text-secondary)" }}
             >
               {personal.bioShort}
@@ -121,7 +124,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap gap-4 mb-12"
+              className="flex flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-12 justify-center sm:justify-start"
             >
               <MagneticButton
                 id="hero-view-work"
@@ -152,7 +155,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex items-center gap-4"
+              className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start flex-wrap"
             >
               <span
                 className="text-xs tracking-widest uppercase font-medium"
@@ -189,7 +192,94 @@ export function Hero() {
                 })}
               </div>
             </motion.div>
-          </div>
+            </div>{/* end left column */}
+
+            {/* Right: Circular Profile Photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="flex-shrink-0 flex items-center justify-center lg:mt-8"
+            >
+              {/* Outer decorative ring */}
+              <div
+                className="relative"
+                style={{
+                  width: "clamp(200px, 40vw, 320px)",
+                  height: "clamp(200px, 40vw, 320px)",
+                }}
+              >
+                {/* Rotating dashed ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    border: "1.5px dashed var(--border-strong)",
+                    top: -14,
+                    left: -14,
+                    right: -14,
+                    bottom: -14,
+                    width: "calc(100% + 28px)",
+                    height: "calc(100% + 28px)",
+                  }}
+                />
+
+                {/* Glow ring */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    boxShadow: "0 0 40px 6px var(--gold-glow), inset 0 0 30px 4px var(--gold-glow)",
+                    borderRadius: "50%",
+                  }}
+                />
+
+                {/* Gold border frame */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: "linear-gradient(135deg, var(--gold), var(--gold-light), transparent, var(--gold))",
+                    padding: 3,
+                    borderRadius: "50%",
+                  }}
+                >
+                  {/* Inner circle with photo */}
+                  <div
+                    className="w-full h-full rounded-full overflow-hidden"
+                    style={{
+                      background: "var(--surface)",
+                    }}
+                  >
+                    <Image
+                      src="/profile2.png"
+                      alt="Ashwani Kumar Arya"
+                      width={320}
+                      height={320}
+                      className="w-full h-full object-cover object-top"
+                      priority
+                      unoptimized
+                    />
+                  </div>
+                </div>
+
+                {/* Small accent dot top */}
+                <motion.div
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+                  style={{ background: "var(--gold)", boxShadow: "0 0 10px var(--gold)" }}
+                />
+                {/* Small accent dot bottom */}
+                <motion.div
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
+                  style={{ background: "var(--gold)", boxShadow: "0 0 10px var(--gold)" }}
+                />
+              </div>
+            </motion.div>
+
+          </div>{/* end two-col */}
         </motion.div>
 
         {/* Scroll indicator */}
