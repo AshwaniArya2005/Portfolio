@@ -29,13 +29,13 @@ export const skills: Skill[] = [
   { name: "JavaScript", icon: "🟨", level: 88, category: "Frontend", color: "#F7DF1E" },
   { name: "TypeScript", icon: "🔷", level: 70, category: "Frontend", color: "#3178C6" },
   { name: "React.js", icon: "⚛️", level: 58, category: "Frontend", color: "#61DAFB" },
-  { name: "Next.js", icon: "▲", level: 60, category: "Frontend", color: "#ffffff" },
+  { name: "Next.js", icon: "▲", level: 60, category: "Frontend", color: "#888888" },
   { name: "TailwindCSS", icon: "🎨", level: 65, category: "Frontend", color: "#06B6D4" },
-  { name: "Three.js", icon: "🧊", level: 70, category: "Frontend", color: "#ffffff" },
+  { name: "Three.js", icon: "🧊", level: 70, category: "Frontend", color: "#9d66d5" },
 
   // Backend
   { name: "Node.js", icon: "🟢", level: 75, category: "Backend", color: "#339933" },
-  { name: "Express.js", icon: "🛤️", level: 72, category: "Backend", color: "#ffffff" },
+  { name: "Express.js", icon: "🛤️", level: 72, category: "Backend", color: "#68a063" },
   { name: "MongoDB", icon: "🍃", level: 60, category: "Backend", color: "#47A248" },
   { name: "MySQL", icon: "🗄️", level: 88, category: "Backend", color: "#4479A1" },
 
