@@ -74,33 +74,7 @@ export function Hero() {
           className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 pb-16"
         >
           <div className="max-w-4xl">
-            {/* Greeting badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-6"
-            >
-              <span
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
-                style={{
-                  background: "var(--gold-glow)",
-                  color: "var(--gold-light)",
-                  border: "1px solid var(--border-strong)",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
-                <motion.span
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  👋
-                </motion.span>
-                Hey there! I'm
-              </span>
-            </motion.div>
-
-            {/* Name */}
+{/* Name */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
