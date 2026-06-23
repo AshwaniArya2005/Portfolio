@@ -23,7 +23,7 @@ export const personal = {
   // Social & links
   github: "AshwaniArya2005",
   linkedin: "ashwani-arya2005",
-  instagram: "Ashwani._.arya", // Replaced Twitter with Instagram
+  instagram: "Ashwani._.arya", 
   leetcode: "Ashwani_Arya2005",
   codeforces: "Ashwani2005",
 
@@ -31,7 +31,7 @@ export const personal = {
   resumeUrl: "/resume.pdf",
 
   // Site metadata
-  siteUrl: "https://ashwani-arya.vercel.app", // Fallback
+  siteUrl: "https://ashwaniarya-portfolio.vercel.app/", 
   siteTitle: "Ashwani Kumar Arya — CS Student & Developer",
   siteDescription:
     "Portfolio of Ashwani Kumar Arya — Computer Science student specializing in Full Stack Development, Java, and AI.",
